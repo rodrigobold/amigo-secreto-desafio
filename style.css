@@ -4,57 +4,98 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}   
-
-.main-content{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
 }
-.content-container{
+
+.main-content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
-.input-box{
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50em;
+    min-height:40em;
+    margin: 1.5em;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 5px;
+}
+
+.title {
+    margin: 2em 2em 7em 2em;
+    font-family: Poppins, sans-serif;
+}
+
+#namesList {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 0 auto;
+    padding: 1em;
+    max-height: 10em;
+    width: 100%;
+    overflow-y: auto; 
+}
+
+#namesList li {
+    width: 14em;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: transparent;
+}
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto; 
+}
+
+.input-content {
     position: relative;
 }
 
-label{
-    color: #aeaeb3;
-    font-family: Poppins, sans-serif;
-    padding: 0 5px;
-    position: absolute;
-    transform: translateY(-50%);
-    top: 50%;
-    left: 1em;
-    pointer-events: none;
-    transition: .3s;
-}
-
-.input-name{
-    color: black;
+.input-name {
+    width: 22.5em;
+    height: 3.5em;
+    padding: 0 1rem;
     border: 1px solid #c2c2c2;
     border-radius: 5px;
     background: transparent;
-    border-radius: 5px;
-    width: 300px;
-    height: 45px;
-    padding: 0 1rem;
     outline: none;
+    color: black;
+}
+
+label {
+    position: absolute;
+    top: 50%;
+    left: 1em;
+    padding: 0 5px;
+    font-family: Poppins, sans-serif;
+    color: #aeaeb3;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: 0.3s;
 }
 
 input:focus~label,
-input:valid~label{
+input:valid~label {
     top: 0;
-    background-color: white;
     font-size: 0.7rem;
-    color: rgb(34, 221, 246);
     font-weight: 500;
+    color: rgb(34, 221, 246);
+    background-color: white;
 }
 
-.button-add{
+.button-add {
+    margin: 1em 0 2em 0;
+    padding: 1em;
     border-radius: 5px;
 }
