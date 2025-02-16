@@ -1,12 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+/* Reset global */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.main-content {
+/* Layout principal */
+.main-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,63 +16,98 @@
     height: 100%;
 }
 
-.content-container {
+.card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50em;
-    min-height:40em;
+    width: 38em;
+    min-height: 44em;
     margin: 1.5em;
-    border: 2px solid rgb(0, 0, 0);
-    border-radius: 5px;
+    padding: 3em;
+    border: 1px solid #c2c2c2;
+    border-radius: 20px;
+}
+
+/* Cabeçalho */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: center;
 }
 
 .title {
-    margin: 2em 2em 7em 2em;
+    margin-bottom: auto;
     font-family: Poppins, sans-serif;
 }
 
-#namesList {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin: 0 auto;
-    padding: 1em;
-    max-height: 10em;
-    width: 100%;
-    overflow-y: auto; 
+#drawResult {
+    height: 2em;
+    margin-top: 5em;
+    font-family: Poppins, sans-serif;
 }
 
-#namesList li {
-    width: 14em;
+.alert-message {
+    height: 2em;
+    margin-top: 5em;
+    font-family: Poppins, sans-serif;
+    text-align: center;
+    width: 100%;
+}
+
+/* Lista de participantes */
+.participants {
+    display: flex;
+    margin-top: 1em;
+}
+
+#participantsList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 1em;
+    max-height: 7em;
+    width: 100%;
+    overflow-y: auto;
+}
+
+#participantsList li {
+    width: 250px;
+    height: 35px;
     padding: 0.5em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    font-size: 0.9em;
+    font-family: Poppins, sans-serif;
+    text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-.input-box {
+/* Formulário */
+.form-container {
     display: flex;
     flex-direction: column;
-    margin-top: auto; 
+    width: 100%;
+    margin-top: auto;
 }
 
-.input-content {
+.input-group {
     position: relative;
+    width: 100%;
 }
 
-.input-name {
-    width: 22.5em;
+.input-field {
+    width: 100%;
     height: 3.5em;
     padding: 0 1rem;
+    color: black;
     border: 1px solid #c2c2c2;
     border-radius: 5px;
     background: transparent;
     outline: none;
-    color: black;
 }
 
 label {
@@ -85,17 +122,30 @@ label {
     transition: 0.3s;
 }
 
-input:focus~label,
-input:valid~label {
+input:focus ~ label,
+input:valid ~ label {
     top: 0;
     font-size: 0.7rem;
     font-weight: 500;
-    color: rgb(34, 221, 246);
+    color: #7d2ae8;
     background-color: white;
 }
 
-.button-add {
-    margin: 1em 0 2em 0;
+/* Botões */
+.btn {
     padding: 1em;
-    border-radius: 5px;
+    font-size: 1rem;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    background: #7d2ae8;
+    cursor: pointer;
+}
+
+.btn-add {
+    margin-top: 1em;
+}
+
+.btn-reveal {
+    margin-top: 1em;
 }

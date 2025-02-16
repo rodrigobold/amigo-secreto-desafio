@@ -7,18 +7,23 @@
     <title>Amigo Secreto</title>
 </head>
 <body>
-    <main class="main-content">
-        <div class="content-container">
-            <h1 class="title">Amigo Secreto</h1>
-            <div class="grid-list" id="gridList">
-                <ul id="namesList"></ul>
+    <main class="main-container">
+        <div class="card">
+            <div class="header">
+                <h1 class="title">Amigo Secreto</h1>
+                <p id="drawResult"></p>
+                <p class="alert-message"></p>
             </div>
-            <div class="input-box">
-                <div class="input-content">
-                    <input required type="text" class="input-name" id="inputName">
-                    <label for="inputName">Nome</label>
+            <div class="participants">
+                <ul id="participantsList"></ul>
+            </div>
+            <div class="form-container">
+                <div class="input-group">
+                    <input required type="text" class="input-field" id="inputField">
+                    <label for="inputField">Nome</label>
                 </div>
-                <button class="button-add" onclick="insertFriend()">Adicionar</button>
+                <button class="btn btn-add" onclick="insertFriend()">Adicionar</button>
+                <button class="btn btn-reveal" onclick="drawRandomParticipant()">Sortear</button>
             </div>
         </div>
     </main>
