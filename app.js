@@ -44,6 +44,3 @@ function drawRandomParticipant() {
         );
     }
 }
-
-/*         let result = document.getElementById('drawResult');
-        result.textContent = pickRandomFriend; */
