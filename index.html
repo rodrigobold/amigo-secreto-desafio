@@ -7,27 +7,35 @@
     <title>Amigo Secreto</title>
 </head>
 <body>
-    <main class="main-container">
-        <div class="header">
+    <header>
+        <div class="header-content">
             <h1 class="title">Sorteio do Amigo Secreto</h1>
         </div>
+    </header>
+    <main>
         <div class="interface-panel">
-            <div class="content-wrapper">
-                <p id="drawResult"></p>
-                <p class="alert-message"></p>
-                <div class="participants" id="participants">
-                    <ul id="participantsList"></ul>
-                    <label for="participants">Lista de amigos</label>
-                </div>
-                <div class="form-container">
-                    <div class="input-group">
-                        <input required type="text" class="input-field" id="inputField">
-                        <label for="inputField">Nome</label>
-                    </div>
-                    <button class="btn btn-add" onclick="insertFriend()">Adicionar</button>
-                    <button class="btn btn-reveal" id="drawButton" onclick="drawRandomParticipant()">Verificar</button>
-                </div>
+            <p id="drawResult"></p>
+            <p class="alert-message"></p>
+    
+            <div class="participants" id="participants">
+                <ul id="participantsList"></ul>
+                <label for="participants">Lista de amigos</label>
             </div>
+    
+            <div class="form-container">
+                <div class="input-group">
+                    <input required type="text" class="input-field" id="inputField">
+                    <label for="inputField">Nome</label>
+                </div>
+    
+                <button class="btn btn-add" onclick="insertFriend()">Adicionar</button>
+                <button class="btn btn-reveal" id="drawButton" onclick="drawRandomParticipant()">Continuar</button>
+            </div>
+        </div>
+    
+        <div class="decoration">
+            <img width="559" height="497" src="./img/friends.png" alt="Sortear nomes">
+            <a href="http://www.freepik.com">Designed by pch.vector / Freepik</a>
         </div>
     </main>
     <script src="app.js" defer></script>
