@@ -2,117 +2,93 @@
 @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-    --color-primary: #e4e5e2;
-    --color-secondary: #3c707c;
+    --color-primary: #fff;
+    --color-secondary: rgb(75, 146, 251);
 }
 
 /* RESET GLOBAL */
-* {
+*, *::after, *::before, html, body {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
 
-/* CONTAINER PRINCIPAL */
-.main-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    min-height: 100vh;
+html, body {
+    font-size: 16px;    
+    line-height: 26px;
+    color: #414141;
+    -webkit-text-size-adjust: 100%;
+    background-color: var(--color-primary);
+    overflow-x: hidden;
 }
 
 /* CABEÇALHO */
-.header {
+header {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    min-height: 33vh;
-    padding: 1rem;
+    padding: 16px 20px;
+    z-index: 2;
+    background: var(--color-secondary);
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
 }
 
-.header::before {
-    background-image: url("img/header.png");
-    background-repeat: no-repeat;
-    background-position: center top -20px;
-    background-size: cover;
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    z-index: 0;
-    min-width: 100%;
-    min-height: 100%;
+.header-content {
+    max-width: 1180px;
+    margin: auto;
 }
 
-.title, #drawResult {
-    position: relative; 
-    z-index: 1;
-}
 
 .title {
-    font-family: Mountains of Christmas, serif; 
-    font-size: clamp(2rem, 5vw, 5rem);
-    color: #000000;
-    font-weight: 700;
-    text-shadow:  
-    -2px -2px 0 #fff,  
-     2px -2px 0 #fff,  
-    -2px  2px 0 #fff,  
-     2px  2px 0 #fff; 
+    font-family: Poppins, serif; 
+    font-size: 1rem;
+    font-size: clamp(1rem, 0.8076923076923077rem + 0.8205128205128207vw, 1.3rem);
+    color: var(--color-primary);
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* CONTAINER PRINCIPAL */
+main {
+    position: relative;
+    max-width: 1180px;
+    margin: auto;
+    display: block;
+    padding: 50px;
+    min-height: auto;
 }
 
 /* PAINEL DE INTERFACE */
 .interface-panel {
-    position: relative;
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center;
-    background-color: var(--color-primary);
-    width: 100%; 
-    border-radius: 50px 50px 0 0; 
-    margin-top: -3rem; 
-    flex: 1;
-}
-
-.content-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: center; 
-    justify-content: center; 
-    max-width: 100%;
-    min-height: 32rem; 
-    border-radius: 30px;
-    padding: 1rem;
-    margin: 0 1rem;
+    max-width: 420px;
+    min-height: 500px;
 }
 
 /* RESULTADO */
 #drawResult {
-    height: 2em;  
-    font-family: Poppins, sans-serif; 
-    font-size: clamp(1rem, 4vw, 1.4rem);
-    color: #000000; 
-    font-weight: 600; 
-    width: 90%;
-    max-width: 32rem;
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis;
+    gap: 500px;
+    height: 3em;
+    font-family: Poppins, sans-serif;
+    font-size: 1rem;
+    font-size: clamp(1rem, 0.6794871794871795rem + 1.3675213675213675vw, 1.5rem);
+    color: #000000;
+    font-weight: 600;
+    width: 100%;
+    white-space: normal;
 }
 
 /* MENSAGEM DE ALERTA */
 .alert-message {
-    height: 2.1rem; 
-    line-height: 2.1rem;
     font-family: Poppins, sans-serif; 
+    height: 2em;
     text-align: center; 
-    width: 50%; 
     color: #000000; 
-    background-color: rgba(255, 255, 255, 0.651); 
+    background-color: var(--color-primary); 
     border-radius: 5px;
     opacity: 0; /* Torna invisível */
     visibility: hidden; /* Remove do fluxo do layout */
@@ -127,11 +103,12 @@
     width: 100%;
     min-height: 10rem; 
     color: #000000; 
-    overflow: hidden; 
-    border: 1px solid #c2c2c2;  
-    border-radius: 20px; 
-    margin-top: auto; 
-    margin-bottom: 1rem;
+    overflow: hidden;   
+    border-radius: 24px; 
+    border: 2px solid #cfddf8;
+    box-shadow: rgba(207, 221, 248, 0.842) 0px 12px 48px -8px;
+    border-top-width: 0px;
+    margin-bottom: 2rem;
 }
 
 .participants label {
@@ -139,7 +116,7 @@
     top: 0; 
     text-align: center; 
     font-family: Poppins, sans-serif; 
-    color: var(--color-secondary); 
+    color: #cfddf8; 
     pointer-events: none; 
     background-color: transparent; 
     z-index: 1; 
@@ -191,7 +168,7 @@
     font-family: Poppins, sans-serif; 
     font-size: 1em; 
     color: #000000; 
-    border: 2px solid var(--color-secondary); 
+    border: 2px solid #cfddf8; 
     border-radius: 20px; 
     background: transparent; 
     outline: none; 
@@ -215,7 +192,7 @@
     top: 0; 
     font-size: 0.7rem; 
     font-weight: 500; 
-    color: var(--color-secondary); 
+    color: #cfddf8; 
     background-color: var(--color-primary);
     border-radius: 20px; 
 }
@@ -234,28 +211,21 @@
     width: 100%;
     padding: 1.2rem;
     position: relative;
-    background: #f3f0f1;
-    margin-bottom: 0.8rem;
+    background: var(--color-secondary);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
     border-radius: 20px;
+    font-weight: 700;
     text-align: center;
     cursor: pointer;
     transition: all 0.1s ease-in-out;
     border: none;
 }
 
-/*
-.btn span {
-    line-height: 100%;
-    font-family: "Montserrat", sans-serif;
-    font-size: 1rem;
-    font-weight: semibold;
-}
-*/
-
 .btn-add, .btn-reveal {
     box-shadow: -6px -6px 10px rgb(228, 229, 226, 0.8),
         6px 6px 10px rgba(0, 0, 0, 0.2);
-    color: var(--color-secondary);
+    color: var(--color-primary);
 }
 
 .btn-add:hover, .btn-reveal:hover {
@@ -271,3 +241,60 @@
     color: #79e3b6;
 }
 
+
+.decoration img {
+    position: absolute; /* Define a posição do elemento como absoluta em relação ao seu contêiner pai */
+    
+    /* Calcula a posição horizontal da imagem:
+       - 50% posiciona no centro do contêiner.
+       - Subtrai 40px para ajustar a imagem para a esquerda.
+       - A segunda parte da expressão ajusta dinamicamente a posição com base no tamanho da tela e a largura do contêiner, criando um espaçamento proporcional. */
+    left: calc(50% - 40px - ((100% - 1220px) / 3));
+
+    top: 5px; /* Define a posição da imagem a 215px do topo do contêiner */
+    
+    right: 0px; /* Define a distância da imagem para a borda direita como 0px, o que pode ser redundante, já que 'left' e 'right' não costumam ser usados juntos em posicionamento absoluto */
+    
+    width: 650px; /* Define a largura da imagem como 516px */
+
+    height: 595px; /* Define a altura da imagem como 495px */
+    
+}
+
+.decoration a {
+    position: absolute; 
+    margin-top: 50px; 
+    right: 0px;
+    font-size: 0.8rem; 
+    color: #333;  
+}
+
+
+@media screen and (max-width: 768px) {
+    main {
+        padding: 30px;
+        min-height: calc(100vh - 80px);
+    }
+
+    .interface-panel {
+        position: relative;
+        z-index: 1;
+        max-width: 365px;
+    }
+
+    .decoration {
+        display: none;
+    }
+
+    img {
+        overflow-clip-margin: content-box;
+        overflow: clip;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #participantsList {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 350px));
+    }
+}
