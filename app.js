@@ -48,7 +48,7 @@ function drawRandomParticipant() {
     const buttonText = button.textContent;
 
     // Verifica se há menos de 2 amigos na lista e se o botão está no estado "Verificar"
-    if (friendsList.length < 2 && buttonText === "Verificar") {
+    if (friendsList.length < 2 && buttonText === "Continuar") {
         // Exibe uma mensagem de alerta se não houver amigos suficientes para o sorteio
         showAlertMessage("Por favor, adicione mais amigos!");
         return;
@@ -71,7 +71,7 @@ function drawRandomParticipant() {
         // Atualiza a tela com o nome da pessoa que deve sortear
         displayTextOnScreen(
             '#drawResult',
-            `É a vez de ${currentDrawer} sortear!`
+            `É a vez de <span class="highlight-current">${currentDrawer}</span> sortear!`
         );
         // Altera o texto do botão para "Sortear"
         button.textContent = "Sortear";
@@ -79,41 +79,42 @@ function drawRandomParticipant() {
     } else if (buttonText === "Sortear") {
         // Obtém o nome do participante que está sorteando
         let currentDrawer = pickedFriends[currentDrawerIndex];
-        
+    
         // Encontra o índice dessa pessoa na lista de amigos
         let drawerIndexInCurrentList = friendsList.indexOf(currentDrawer);
-        
+    
         // Gera um índice aleatório, garantindo que não seja o mesmo da pessoa sorteando
         let randomIndex;
         do {
             randomIndex = Math.floor(Math.random() * friendsList.length);
         } while (randomIndex === drawerIndexInCurrentList && friendsList.length > 1);
-        
+    
         // Seleciona o amigo secreto baseado no índice aleatório gerado
         let pickRandomFriend = friendsList[randomIndex];
+        
         // Remove o amigo sorteado da lista para evitar repetições
         friendsList.splice(randomIndex, 1);
-        
+    
         // Exibe o resultado do sorteio na tela
         displayTextOnScreen(
             '#drawResult',
-            `O amigo secreto de ${currentDrawer} é: ${pickRandomFriend}`
+            `O amigo secreto de <span class="highlight-current">${currentDrawer}</span> é: <span class="highlight-random">${pickRandomFriend}</span>`
         );
-        
+    
         // Atualiza a lista de amigos na interface
         updateFriendsList();
-        
-        // Incrementa o índice do próximo sorteador
-        currentDrawerIndex++;
-        
+    
+        // Remove o sorteador da lista de pickedFriends
+        pickedFriends.splice(currentDrawerIndex, 1);
+    
         // Se todos já sortearam, volta ao início
         if (currentDrawerIndex >= pickedFriends.length) {
             currentDrawerIndex = 0;
         }
-        
+    
         // Se não houver mais amigos na lista após o sorteio, redefine o botão
         if (friendsList.length === 0) {
-            button.textContent = "Verificar";
+            button.textContent = "Continuar";
             currentDrawerIndex = 0; // Reinicia o índice para uma nova rodada
         }
     }

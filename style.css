@@ -78,8 +78,17 @@ main {
     font-size: clamp(1rem, 0.6794871794871795rem + 1.3675213675213675vw, 1.5rem);
     color: #000000;
     font-weight: 600;
+    line-height: 1.5;
     width: 100%;
     white-space: normal;
+}
+
+.highlight-current {
+    color: rgb(75, 146, 251);
+}
+
+.highlight-random {
+    color: rgb(255, 0, 38);
 }
 
 /* MENSAGEM DE ALERTA */
