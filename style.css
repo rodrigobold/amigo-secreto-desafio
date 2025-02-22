@@ -25,6 +25,11 @@ html, body {
     overflow-x: hidden;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 /* CABEÇALHO */
 header {
     position: relative;
@@ -53,33 +58,35 @@ header {
 
 /* CONTAINER PRINCIPAL */
 main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
-    max-width: 1180px;
-    margin: auto;
-    display: block;
+    margin: auto;   
     padding: 50px;
     min-height: auto;
+    min-width: 100%;
+    gap: 50px;
 }
 
 /* PAINEL DE INTERFACE */
 .interface-panel {
-    display: flex;
+    display: flex;  
     flex-direction: column;
-    max-width: 420px;
+    min-width: 420px;
     min-height: 500px;
+    max-width:35%;
 }
 
 /* RESULTADO */
 #drawResult {
-    gap: 500px;
-    height: 3em;
+    min-height: 3.1em;
     font-family: Poppins, sans-serif;
     font-size: 1rem;
     font-size: clamp(1rem, 0.6794871794871795rem + 1.3675213675213675vw, 1.5rem);
     color: #000000;
     font-weight: 600;
     line-height: 1.5;
-    width: 100%;
     white-space: normal;
 }
 
@@ -88,13 +95,15 @@ main {
 }
 
 .highlight-random {
-    color: rgb(255, 0, 38);
+    color: rgb(18, 202, 54);
 }
 
 /* MENSAGEM DE ALERTA */
 .alert-message {
     font-family: Poppins, sans-serif; 
-    height: 2em;
+    font-size: 1rem;
+    min-height: 2em;
+    margin-bottom: 5px;
     text-align: center; 
     color: #000000; 
     background-color: var(--color-primary); 
@@ -250,29 +259,22 @@ main {
     color: #79e3b6;
 }
 
+.decoration {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 
 .decoration img {
-    position: absolute; /* Define a posição do elemento como absoluta em relação ao seu contêiner pai */
-    
-    /* Calcula a posição horizontal da imagem:
-       - 50% posiciona no centro do contêiner.
-       - Subtrai 40px para ajustar a imagem para a esquerda.
-       - A segunda parte da expressão ajusta dinamicamente a posição com base no tamanho da tela e a largura do contêiner, criando um espaçamento proporcional. */
-    left: calc(50% - 40px - ((100% - 1220px) / 3));
-
-    top: 5px; /* Define a posição da imagem a 215px do topo do contêiner */
-    
-    right: 0px; /* Define a distância da imagem para a borda direita como 0px, o que pode ser redundante, já que 'left' e 'right' não costumam ser usados juntos em posicionamento absoluto */
-    
-    width: 650px; /* Define a largura da imagem como 516px */
-
-    height: 595px; /* Define a altura da imagem como 495px */
+    position: relative; /* Define a posição do elemento como absoluta em relação ao seu contêiner pai */
     
 }
 
 .decoration a {
-    position: absolute; 
-    margin-top: 50px; 
+    position: relative; 
     right: 0px;
     font-size: 0.8rem; 
     color: #333;  
@@ -281,12 +283,16 @@ main {
 
 @media screen and (max-width: 768px) {
     main {
-        padding: 30px;
+        display:flex;
+        justify-content: start;
+        align-items: start;
+        min-width: 100%;
+        padding: 20px 30px 30px 30px;
         min-height: calc(100vh - 80px);
     }
 
     .interface-panel {
-        position: relative;
+        min-width: 0;
         z-index: 1;
         max-width: 365px;
     }
@@ -305,5 +311,10 @@ main {
     #participantsList {
         display: grid;
         grid-template-columns: repeat(1, minmax(0, 350px));
+    }
+
+    .alert-message {
+        font-size: 0.875rem;
+        font-size: clamp(0.875rem, 0.6666666666666667rem + 0.6944444444444444vw, 1rem);
     }
 }
