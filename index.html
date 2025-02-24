@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Amigo Secreto</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
@@ -12,28 +12,43 @@
             <h1 class="title">Sorteio do Amigo Secreto</h1>
         </div>
     </header>
+    
     <main>
         <div class="interface-panel">
             <p id="drawResult"></p>
+            
+            <button id="hideBtn" class="hide-btn" onclick="hideSelectedFriend()"></button>
+            
             <p class="alert-message"></p>
-            <div class="participants" id="participants">
-                <ul id="participantsList"></ul>
-                <label for="participants">Lista de amigos</label>
+            
+            <div class="participants-container">
+                <div class="participants" id="participants">
+                    <ul id="participantsList"></ul>
+                </div>
+                <button class="participants-btn" onclick="toggleParticipants()">
+                    Lista de Amigos -
+                </button>
             </div>
+            
             <div class="form-container">
                 <div class="input-group">
-                    <input required type="text" class="input-field" id="inputField">
+                    <input type="text" class="input-field" id="inputField" required>
                     <label for="inputField">Nome</label>
                 </div>
-                <button class="btn btn-add" onclick="insertFriend()">Adicionar</button>
-                <button class="btn btn-reveal" id="drawButton" onclick="drawRandomParticipant()">Continuar</button>
+                
+                <div class="buttons-group">
+                    <button class="btn btn-add" onclick="insertFriend()">Adicionar</button>
+                    <button class="btn btn-reveal" id="drawButton" onclick="drawRandomParticipant()">Continuar</button>
+                </div>
             </div>
         </div>
+        
         <div class="decoration">
-            <img width="559" height="497" src="./img/friends.png" alt="Sortear nomes">
+            <img src="./img/friends.png" alt="Sortear nomes" width="559" height="497">
             <a href="http://www.freepik.com">Designed by pch.vector / Freepik</a>
         </div>
     </main>
+    
     <script src="app.js" defer></script>
 </body>
 </html>

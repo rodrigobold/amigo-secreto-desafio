@@ -1,4 +1,7 @@
-// Declaração de variáveis globais para armazenar as listas de amigos
+// ============================== //
+// Declaração de variáveis globais //
+// ============================== //
+
 let friendsList = [];   // Lista que armazenará os nomes dos amigos ainda não sorteados
 let pickedFriends = []; // Lista que armazenará os nomes dos amigos que vão ser chamados para realizar o sorteio
 let currentDrawerIndex = 0; // Índice do participante atual
@@ -47,6 +50,40 @@ function updateFriendsList() {
     });
 }
 
+// Alterna a visibilidade da lista de participantes
+function toggleParticipants() {
+    const participants = document.getElementById('participants'); // Obtém o elemento da lista de participantes
+    const participantsBtn = document.querySelector('.participants-btn'); // Obtém o botão de alternância
+
+    participants.classList.toggle('collapsed'); // Alterna a classe 'collapsed' para esconder/exibir participantes
+
+    // Define o novo estado baseado na presença da classe 'collapsed'
+    const newState = participants.classList.contains('collapsed') ? 'Lista de Amigos +' : 'Lista de Amigos -';
+
+    // Atualiza o texto do botão dinamicamente
+    updateDrawButtonState(participantsBtn, newState);
+}
+
+// Oculta ou exibe o nome do amigo sorteado
+function hideSelectedFriend() {
+    const resultElement = document.getElementById('selected-friend'); // Obtém o elemento que mostra o sorteado
+    const hideBtn = document.querySelector('.hide-btn'); // Obtém o botão de esconder
+
+    resultElement.classList.toggle('collapsed'); // Alterna a classe 'collapsed' para esconder/exibir o nome sorteado
+
+    // Define o novo estado baseado na presença da classe 'collapsed'
+    const newState = resultElement.classList.contains('collapsed') ? 'Exibir +' : 'Ocultar -';
+
+    // Atualiza o texto do botão dinamicamente
+    updateDrawButtonState(hideBtn, newState);
+
+    // Atualiza o texto na tela para manter a parte inicial do resultado
+    displayTextOnScreen(
+        '#drawResult',
+        `O amigo secreto de <span class="highlight-current">${currentDrawer}</span> é:`
+    );
+}
+
 // ======================== //
 // Funções de Gerenciamento //
 // ======================== //
@@ -76,7 +113,7 @@ function validateParticipantsCount(friendsList, buttonText) {
 }
 
 // ========================= //
-// Funções do Sorteio      //
+// Funções do Sorteio       //
 // ========================= //
 
 // Exibe na tela de quem é a vez de sortear
@@ -99,9 +136,12 @@ function performDraw(currentDrawer, friendsList) {
 
 // Exibe o resultado do sorteio
 function displayDrawResult(currentDrawer, selectedFriend) {
+    // Exibe o resultado
     displayTextOnScreen(
         '#drawResult',
-        `O amigo secreto de <span class="highlight-current">${currentDrawer}</span> é: <span class="highlight-random">${selectedFriend}</span>` // Exibe o resultado do sorteio
+        `O amigo secreto de <span class="highlight-current">${currentDrawer}</span> é: 
+        <span id="selected-friend" class="highlight-random">${selectedFriend}</span>
+        <button id="hideBtn" class="hide-btn" onclick="hideSelectedFriend()">Ocultar -</button>`
     );
 }
 
@@ -117,41 +157,54 @@ function updateAfterDraw(randomIndex, currentDrawerIndex, selectedFriend) {
 // Função Principal do Sorteio    //
 // ================================ //
 
+// Controla o fluxo do sorteio do amigo secreto, gerenciando os estados do botão e realizando o sorteio
 function drawRandomParticipant() {
     const button = document.getElementById('drawButton'); // Obtém o botão de sorteio
     const buttonText = button.textContent; // Obtém o texto atual do botão
     if (!validateParticipantsCount(friendsList, buttonText)) return; // Valida se há participantes suficientes
 
+    // Estado "Continuar": Prepara a interface para o início do sorteio
     if (buttonText === "Continuar") {
-        displayTextOnScreen('#drawResult', 'Esta tudo certo! Agora clique em Preparar!'); // Mensagem inicial
+        const participants = document.getElementById('participants');
+        if (!participants.classList.contains('collapsed')) {
+            toggleParticipants(); // Esconde a lista de participantes
+        }
+        // Exibe a mensagem inicial
+        displayTextOnScreen('#drawResult', 'Esta tudo certo! Agora clique em Preparar!'); 
         updateDrawButtonState(button, 'prepare'); // Atualiza o botão para "Preparar"
         return;
     }
 
+    // Estado "Preparar": Exibe o participante que irá sortear
     if (buttonText === "Preparar") {
         const currentDrawer = pickedFriends[currentDrawerIndex]; // Obtém o sorteador atual
         displayCurrentDrawer(currentDrawer); // Exibe o sorteador
         updateDrawButtonState(button, 'draw'); // Atualiza o botão para "Sortear"
+        document.getElementById("hideBtn").style.display = "none"; // Esconde o botão de ocultar
         return;
     }
 
-    if (buttonText === "Sortear") {  // Verifica se o texto do botão é "Sortear"
-        const currentDrawer = pickedFriends[currentDrawerIndex];  // Obtém o sorteador atual da lista pickedFriends
-        const selectedFriend = performDraw(currentDrawer, friendsList);  // Realiza o sorteio com o sorteador atual e a lista de amigos
-        displayDrawResult(currentDrawer, selectedFriend);  // Exibe o resultado do sorteio mostrando quem foi o amigo sorteado
+    // Estado "Sortear": Realiza o sorteio e exibe o resultado
+    if (buttonText === "Sortear") {
+        const currentDrawer = pickedFriends[currentDrawerIndex]; // Obtém o sorteador atual da lista
+        const selectedFriend = performDraw(currentDrawer, friendsList); // Realiza o sorteio
+        displayDrawResult(currentDrawer, selectedFriend); // Exibe o resultado do sorteio
         updateDrawButtonState(button, 'prepare'); // Atualiza o botão para "Preparar"
+        document.getElementById("hideBtn").style.display = "inline"; // Exibe o botão de ocultar
         
+        // Atualiza o índice do sorteador com a posição do amigo sorteado
         const newDrawerIndex = updateAfterDraw(
-            friendsList.indexOf(selectedFriend),  // Atualiza o índice do sorteador com a posição do amigo sorteado
-            currentDrawerIndex,  // Passa o índice do sorteador atual
-            selectedFriend  // Passa o amigo sorteado
+            friendsList.indexOf(selectedFriend),
+            currentDrawerIndex,
+            selectedFriend
         ); 
         
-        if (friendsList.length === 0) {  // Verifica se a lista de amigos ficou vazia após o sorteio
-            updateDrawButtonState(button, 'continue');  // Altera o estado do botão para "continue"
-            currentDrawerIndex = 0;  // Reseta o índice do sorteador para 0
-        } else {  // Caso ainda haja amigos na lista
-            currentDrawerIndex = newDrawerIndex;  // Atualiza o índice do sorteador para o próximo valor
+        // Verifica se a lista de amigos ficou vazia após o sorteio
+        if (friendsList.length === 0) {
+            updateDrawButtonState(button, 'continue'); // Altera o estado do botão para "continue"
+            currentDrawerIndex = 0; // Reseta o índice do sorteador para 0
+        } else {
+            currentDrawerIndex = newDrawerIndex; // Atualiza o índice do sorteador para o próximo valor
         }
     }
 }
