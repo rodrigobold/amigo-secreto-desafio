@@ -1,14 +1,14 @@
-// ============================== //
+// =============================== //
 // Declaração de variáveis globais //
-// ============================== //
+// =============================== //
 
 let participants = []; //Lista oficial de participantes do sorteio.
 let secretPairs = {};   // Objeto para armazenar os pares de amigo secreto
 let currentPairIndex = 0; // Índice para controlar qual par está sendo exibido
 
-// ============================== //
+// =================================== //
 // Funções de Manipulação da Interface //
-// ============================== //
+// =================================== //
 
 // Exibe um texto dentro de um elemento HTML especificado
 function displayTextOnScreen(tag, text) {
@@ -42,12 +42,34 @@ function updateDrawButtonState(buttonElement, currentState) {
 
 // Atualiza a lista de amigos visíveis na tela
 function updateFriendsList() {
-    let list = document.getElementById('participantsList'); // Obtém a lista de participantes na interface
-    list.innerHTML = ''; // Limpa a lista para evitar duplicações
-    participants.forEach(friend => { // Percorre todos os amigos na lista
-        let listItem = document.createElement('li'); // Cria um novo elemento de lista (li)
-        listItem.textContent = friend; // Define o nome do amigo como o conteúdo do item de lista
-        list.appendChild(listItem); // Adiciona o item de lista à lista visível na interface
+    let list = document.getElementById('participantsList');
+    list.innerHTML = '';
+    
+    participants.forEach((friend, index) => {
+        let listItem = document.createElement('li');
+        
+        // Cria um container para organizar os elementos
+        let container = document.createElement('div');
+        container.className = 'participant-inner';
+        
+        // Cria o span para o número
+        let numberSpan = document.createElement('span');
+        numberSpan.textContent = `${index + 1}.`;
+        numberSpan.className = 'participant-number';
+        
+        // Cria o span para o nome
+        let nameSpan = document.createElement('span');
+        nameSpan.textContent = friend;
+        nameSpan.className = 'participant-name';
+        
+        // Adiciona os spans ao container
+        container.appendChild(numberSpan);
+        container.appendChild(nameSpan);
+        
+        // Adiciona o container ao item da lista
+        listItem.appendChild(container);
+        
+        list.prepend(listItem);
     });
 }
 
@@ -94,7 +116,7 @@ function insertFriend() {
 }
 
 // ========================= //
-// Funções do Sorteio       //
+// Funções do Sorteio        //
 // ========================= //
 
 // Função que mistura a lista
@@ -152,7 +174,7 @@ function displayDrawResult(drawer, friend) {
 }
 
 // ================================ //
-// Função Principal do Sorteio    //
+// Função Principal do Sorteio      //
 // ================================ //
 
 // Controla o fluxo do sorteio do amigo secreto, gerenciando os estados do botão e realizando o sorteio
@@ -186,6 +208,10 @@ function drawRandomParticipant() {
         
         // Reseta o índice do par atual
         currentPairIndex = 0;
+
+        // Desativa botão adicionar
+        const addButton = document.getElementById('addButton'); // Obtém o botão de adicionar
+        addButton.disabled = true; // Desabilita o botão de adicionar
         
         // Exibe a mensagem inicial
         displayTextOnScreen('#drawResult', 'Está tudo certo! Agora clique em Preparar!'); 
@@ -254,6 +280,8 @@ function drawRandomParticipant() {
             if (participantsList.classList.contains('collapsed')) {
                 toggleParticipants();
             }
+
+            addButton.disabled = false; // Habilita o botão de adicionar
         
             // Atualiza o botão para voltar ao estado inicial
             updateDrawButtonState(button, 'continue');

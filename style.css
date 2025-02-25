@@ -225,13 +225,52 @@ main {
     padding: 0.5em; 
     font-size: 0.9em;
     font-family: Poppins, sans-serif; 
-    text-align: center; 
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis;
     background-color: #a5a5a525;
     border-radius: 5px;
 }
+
+.participant-inner  {
+    display: flex;
+    width: 100%;
+    position: relative;
+}
+
+.participant-number {
+    color: var(--color-secondary);
+    margin-right: 5px;
+    position: absolute;
+    left: 0;
+}
+
+.participant-name {
+    color: #333;
+    width: 100%;
+    text-align: center;
+}
+
+/* Estilizando a barra de rolagem no Chrome/Edge/Opera */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color:#cfddf8;
+    border-radius: 10px;
+    border: 3px solid #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a9a7a7;
+}
+
 
 /* ===================================
    7. FORMULÁRIO E CAMPOS DE ENTRADA
@@ -311,6 +350,10 @@ main {
 /* Botões específicos com espaçamento */
 .btn-add {
     margin-top: 1rem; 
+}
+
+.btn-add:disabled {
+    background-color: #a9a7a7; /* Cor de fundo cinza */
 }
 
 .btn-reveal {
