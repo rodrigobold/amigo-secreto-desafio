@@ -80,9 +80,25 @@ function toggleParticipants() {
 
     participants.classList.toggle('collapsed'); // Alterna a classe 'collapsed' para esconder/exibir participantes
 
-    // Define o novo texto do botão baseado na presença da classe 'collapsed'
-    participantsBtn.textContent = participants.classList.contains('collapsed') ? 'Lista de Amigos +' : 'Lista de Amigos -';
+    // Verifica se a tela tem menos de 600 pixels
+    const isSmallScreen = window.innerWidth < 400;
+
+    // Define o texto do botão com base na tela e no estado da lista
+    if (isSmallScreen) {
+        participantsBtn.textContent = participants.classList.contains('collapsed') ? 'Lista +' : 'Lista -';
+    } else {
+        participantsBtn.textContent = participants.classList.contains('collapsed') ? 'Lista de Amigos +' : 'Lista de Amigos -';
+    }
 }
+
+// Adiciona um evento de resize para atualizar o texto ao redimensionar a tela
+window.addEventListener("resize", () => {
+    const participantsBtn = document.querySelector('.participants-btn');
+    if (!participantsBtn) return;
+
+    const isSmallScreen = window.innerWidth < 400;
+    participantsBtn.textContent = isSmallScreen ? 'Lista +' : 'Lista de Amigos +';
+});
 
 // Oculta ou exibe o nome do amigo sorteado
 function hideSelectedFriend() {
@@ -265,25 +281,25 @@ function drawRandomParticipant() {
         return;
     }
 
-        // Estado "Reiniciar": Reseta tudo e exibe a lista de participantes novamente
-        if (buttonText === "Reiniciar") {
-            participants = []; // Zera a lista de participantes
-            secretPairs = {}; // Zera os pares do sorteio
-            currentPairIndex = 0; // Reseta o índice do sorteio
-        
-            // Atualiza a interface
-            updateFriendsList(); // Atualiza a lista de participantes visível na tela
-            displayTextOnScreen('#drawResult', 'Sorteio reiniciado! Adicione novos participantes.');
+    // Estado "Reiniciar": Reseta tudo e exibe a lista de participantes novamente
+    if (buttonText === "Reiniciar") {
+        participants = []; // Zera a lista de participantes
+        secretPairs = {}; // Zera os pares do sorteio
+        currentPairIndex = 0; // Reseta o índice do sorteio
+    
+        // Atualiza a interface
+        updateFriendsList(); // Atualiza a lista de participantes visível na tela
+        displayTextOnScreen('#drawResult', 'Sorteio reiniciado! Adicione novos participantes.');
             
-            // Exibe a lista de participantes novamente
-            const participantsList = document.getElementById('participants');
-            if (participantsList.classList.contains('collapsed')) {
-                toggleParticipants();
-            }
-
-            addButton.disabled = false; // Habilita o botão de adicionar
-        
-            // Atualiza o botão para voltar ao estado inicial
-            updateDrawButtonState(button, 'continue');
+        // Exibe a lista de participantes novamente
+        const participantsList = document.getElementById('participants');
+        if (participantsList.classList.contains('collapsed')) {
+            toggleParticipants();
         }
+
+        addButton.disabled = false; // Habilita o botão de adicionar
+        
+        // Atualiza o botão para voltar ao estado inicial
+        updateDrawButtonState(button, 'continue');
+    }
 }
