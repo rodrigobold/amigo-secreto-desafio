@@ -5,21 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amigo Secreto</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/12eb525db5.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
         <div class="header-content">
-            <h1 class="title">Sorteio do Amigo Secreto</h1>
+            <h1 class="title"><i class="fa-solid fa-gift" style="color: #ffffff;"></i>
+                Sorteio do Amigo Secreto</h1>
         </div>
     </header>
     
     <main>
         <div class="interface-panel">
-            <p id="drawResult">Seja bem-vindo ao sorteio do amigo secreto!</p>
+            <p id="drawResult">Bem vindo! Adicione seus amigos à lista para realizar o sorteio!</p>
             
             <button id="hideBtn" class="hide-btn" onclick="hideSelectedFriend()"></button>
             
-            <p class="alert-message"></p>
+            <p class="alert-message">
+                <i class="fa-solid fa-bell"></i>"></i>
+            </p>
             
             <div class="participants-container">
                 <div class="participants" id="participants">
@@ -45,9 +49,66 @@
         
         <div class="decoration">
             <img src="./img/friends.png" alt="Sortear nomes" width="680" height="497">
-            <a href="http://www.freepik.com">Designed by pch.vector / Freepik</a>
         </div>
     </main>
+    
+    <footer>
+        <div class="footer-container">
+            <!-- Créditos -->
+            <div class="footer-credits">
+                <!-- Créditos de imagem -->
+                <h3 class="footer-title">Créditos</h3>
+                <p class="footer-credits-text">
+                    Imagem de 
+                    <a href="https://www.freepik.com/author/pch-vector" target="_blank" rel="noopener noreferrer">
+                        pch.vector
+                    </a> 
+                    disponível em 
+                    <a href="https://www.freepik.com/" target="_blank" rel="noopener noreferrer">
+                        Freepik.
+                    </a>
+                    </br>
+                    Ícones fornecidos por 
+                    <a href="https://fontawesome.com/" target="_blank" rel="noopener noreferrer">Font Awesome</a> 
+                </p>
+    
+                <!-- Créditos de desenvolvimento -->
+                <h3 class="footer-title">Desenvolvido por</h3>
+                <p class="footer-credits-text">Rodrigo Bold</p>
+            </div>
+
+             <!-- Descrição do projeto -->
+            <div class="footer-description">
+                <h3 class="footer-title">Sorteio do Amigo Secreto</h3>
+                <p class="footer-text">
+                    Este projeto foi criado como parte do desafio de desenvolvimento do curso Oracle Next Education (ONE), 
+                    uma iniciativa da Oracle em parceria com a Alura. O objetivo do desafio era construir um site de sorteio 
+                    de Amigo Secreto, aplicando os conceitos aprendidos durante o curso!
+                </p>
+            </div>
+    
+            <!-- Redes sociais -->
+            <div class="footer-contact">
+                <h3 class="footer-title">Contate-me</h3>
+                <ul class="socials">
+                    <li>
+                        <a href="https://www.linkedin.com/in/rodrigo-bold/" 
+                           class="fa-brands fa-linkedin fa-3x" 
+                           target="_blank" 
+                           aria-label="LinkedIn">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/rodrigobold" 
+                           class="fa-brands fa-square-github fa-3x" 
+                           target="_blank" 
+                           aria-label="GitHub">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
     
     <script src="app.js" defer></script>
 </body>
