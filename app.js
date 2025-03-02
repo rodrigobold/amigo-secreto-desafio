@@ -19,7 +19,7 @@ function displayTextOnScreen(tag, text) {
 // Exibe uma mensagem de alerta na tela
 function showAlertMessage(message) {
     const alertMessage = document.querySelector(".alert-message"); // Seleciona o elemento da mensagem de alerta
-    alertMessage.textContent = message; // Define o texto da mensagem de alerta
+    alertMessage.innerHTML = message; // Define o HTML da mensagem (em vez de apenas o texto)
     alertMessage.style.opacity = "1"; // Torna a mensagem visível
     alertMessage.style.visibility = "visible"; // Garante que a mensagem seja exibida
 
@@ -28,6 +28,7 @@ function showAlertMessage(message) {
         alertMessage.style.visibility = "hidden"; // Remove a visibilidade da mensagem
     }, 3000); // Define um tempo de 3 segundos antes de esconder a mensagem
 }
+
 
 // Atualiza o estado e texto do botão de sorteio
 function updateDrawButtonState(buttonElement, currentState) {
@@ -121,10 +122,23 @@ function hideSelectedFriend() {
 // Adiciona um novo amigo às listas
 function insertFriend() {
     let inputName = document.getElementById('inputField'); // Obtém o campo de entrada de texto
+    
     if (inputName.value.trim() === '') { // Verifica se o campo está vazio
         showAlertMessage("Por favor, insira um nome!"); // Exibe uma mensagem de alerta caso esteja vazio
     } else {
         participants.push(inputName.value); // Adiciona o nome à lista de amigos para o sorteio
+        
+        // Limita o número de caracteres exibidos na mensagem
+        const maxLength = 12;
+        let message = inputName.value; // Inicializa a variável de mensagem com o valor do input
+        
+        if (message.length > maxLength) {
+            message = message.slice(0, maxLength) + '...'; // Adiciona reticências se o texto ultrapassar o limite
+        }
+        
+        // Exibe a mensagem com o nome adicionado à lista do sorteio
+        showAlertMessage(`Você adicionou <span class="highlight-random">${message}</span> à lista do sorteio!`);
+        
         inputName.value = ''; // Limpa o campo de entrada após adicionar o nome
         updateFriendsList(); // Atualiza a interface com os novos amigos
         console.log(`participants: ${participants}`); // Exibe a lista de amigos disponíveis para sorteio
