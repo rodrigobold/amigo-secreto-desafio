@@ -145,6 +145,13 @@ function insertFriend() {
     }
 }
 
+// Adiciona um evento ao campo de input para detectar quando o usuário pressionar Enter
+document.getElementById("inputField").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        document.getElementById("addButton").click();
+    }
+});
+
 // ========================= //
 // Funções do Sorteio        //
 // ========================= //
