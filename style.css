@@ -1,25 +1,33 @@
-/* ===================================
-   1. CONFIGURAÇÕES INICIAIS
-   =================================== */
 
-/* Importação de fontes externas */
+/* ───────────────────────────────────────────────── */
+/*  1. CONFIGURAÇÕES INICIAIS                        */
+/* ───────────────────────────────────────────────── */
+
+/*  Importação de fontes externas */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-/* Variáveis globais de cores */
+/* Variáveis globais */
 :root {
+    
+    /* Cores */
     --color-primary: #ffffff;
     --color-secondary: #3fa9f5;
     --color-tertiary: #000000;
     --color-auxiliary: #cfddf8;
     --color-highlight: #12ca36;
-}
 
+    /* Tamanhos de Fontes */
+    --font-small: clamp(0.875rem, 0.75rem + 0.416vw, 1rem);
+    --font-medium: clamp(1rem, 0.7rem + 1vw, 1.3rem);
+    --font-large: clamp(1rem, 0.68rem + 1.37vw, 1.5rem);
+}
 
 /* Reset global para garantir consistência entre navegadores */
 *, *::after, *::before, html, body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+
     text-decoration: none;
     text-overflow: ellipsis;
     word-break: break-word;
@@ -40,9 +48,9 @@ body {
 }
 
 
-/* ===================================
-   2. CABEÇALHO
-   =================================== */
+/* ───────────────────────────────────────────────── */
+/*  2. CABEÇALHO                                     */
+/* ───────────────────────────────────────────────── */
 
 header {
     position: relative;
@@ -55,13 +63,13 @@ header {
     width: 100%;
     max-width: 1250px;
     margin: auto;
-    padding: 0 15px; /* Adiciona um padding para não colar nas bordas */
+    padding: 0 15px;
 }
 
 .title {
     font-family: sans-serif;
     font-size: 1rem;
-    font-size: clamp(1rem, 0.6794871794871795rem + 1.3675213675213675vw, 1.5rem);
+    font-size: var(--font-large);
     color: var(--color-primary);
     font-weight: 600;
     white-space: nowrap;
@@ -71,9 +79,9 @@ header {
 }
 
 
-/* ===================================
-   3. CONTAINER PRINCIPAL
-   =================================== */
+/* ───────────────────────────────────────────────── */
+/*  3. CONTAINER PRINCIPAL                           */
+/* ───────────────────────────────────────────────── */
 
 main {
     display: flex;
@@ -97,16 +105,16 @@ main {
 }
 
 
-/* ===================================
-   4. ÁREA DE RESULTADO DO SORTEIO
-   =================================== */
+/* ───────────────────────────────────────────────── */
+/*  4. ÁREA DE RESULTADO DO SORTEIO                  */
+/* ───────────────────────────────────────────────── */
 
 #drawResult {
     display: inline-block;
     min-height: 4.5em;
     font-family: Poppins, sans-serif;
-    font-size: 1rem;
-    font-size: clamp(1rem, 0.6794871794871795rem + 1.3675213675213675vw, 1.3rem);
+    font-size: 1.3rem;
+    font-size: var(--font-medium);
     color: var(--color-tertiary);
     font-weight: 600;
     line-height: 1.5;
@@ -131,14 +139,15 @@ main {
 }
 
 
-/* ===================================
-   5. MENSAGENS DE ALERTA
-   =================================== */
+/* ───────────────────────────────────────────────── */
+/*  5. MENSAGENS DE ALERTA                           */
+/* ───────────────────────────────────────────────── */
 
 .alert-message {
     font-family: Poppins, sans-serif;
-    font-size: 1rem;
-    min-height: 1em;
+    font-size: 0.875rem;
+    font-size: var(--font-small);
+    min-height: 3em;
     padding: 0.8em 0;
     line-height: 1.3em;
     text-align: center; 
@@ -151,9 +160,9 @@ main {
 }
 
 
-/* ===================================
-   6. LISTA DE PARTICIPANTES
-   =================================== */
+/* ───────────────────────────────────────────────── */
+/*  6. LISTA DE PARTICIPANTES                        */
+/* ───────────────────────────────────────────────── */
 
 /* Container para o controle de participantes */
 .participants-container {
@@ -173,6 +182,7 @@ main {
     border: none;
     border-radius: 0 0 15px 15px;
     font-family: Poppins, sans-serif;
+    font-size: 1em;
     font-size: clamp(0.9rem, 0.733rem + 0.556vw, 1rem);
     color: var(--color-primary);
     background: var(--color-secondary);
@@ -234,7 +244,7 @@ main {
 #participantsList li {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;  
     width: 100%; 
     height: 35px; 
     padding: 0.5em; 
@@ -246,30 +256,91 @@ main {
 }
 
 .participant-inner {
-    display: flex;
-    width: 100%;
     position: relative;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .participant-number {
-    color: var(--color-secondary);
-    margin-right: 5px;
-    font-weight: 500;
     position: absolute;
     left: 0;
+    color: var(--color-secondary);
+    font-weight: 500;
+    flex-shrink: 0;
+    padding-right: 0.2em;
 }
 
 .participant-name {
+    align-items: center;
+    position: relative;
     color: #333;
-    max-width: 85%;
+    max-width: calc(100% - 45px); /* Garante que o nome não ultrapasse o espaço dos botões */
     text-align: center;
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis;
 }
 
-/* Estilizando a barra de rolagem no Chrome/Edge/Opera */
+/* ───────────────────────────────────────────────── */
+/*  7. GERENCIAMENTO DE PARTICIPANTES                */
+/* ───────────────────────────────────────────────── */
+
+.participant-actions {
+    position: absolute;
+    right: 0;
+    flex-shrink: 0;
+}
+
+.edit-btn, .delete-btn {
+    display: flex;
+    align-items: end;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px;
+    color: #9b9b9b;
+    transition: color 0.3s ease;
+}
+
+.edit-btn:hover {
+    color: #4CAF50; /* Verde para editar */
+}
+
+.delete-btn:hover {
+    color: #F44336; /* Vermelho para deletar */
+}
+
+.participant-actions i {
+    font-size: 0.7em;
+}
+
+/* Estilo para o nome do participante quando está sendo editado */
+.participant-name[contenteditable="true"] {
+    display: flex;
+    overflow-x: auto;         /* Permite a rolagem horizontal */
+    text-overflow: unset;     /* Desativa o ellipsis */
+    max-width: calc(100% - 45px); /* Limita a largura, mas com rolagem */
+    background-color: #f0f0f0; /* Cor de fundo enquanto edita */
+    outline: none;       /* Remove a borda de foco */
+    padding: 2px;        /* Adiciona um pequeno padding para facilitar a edição */
+}
+
+/* Esconde a barra de rolagem horizontal */
+.participant-name::-webkit-scrollbar {
+    display: none;  /* Oculta a barra de rolagem */
+}
+
+.participant-name[contenteditable="true"]:focus {
+    background-color: rgb(226, 226, 226);
+}
+
+/* ───────────────────────────────────────────────── */
+/*  8. ESTILIZANDO A BARRA DE ROLAGEM                */
+/*     CHROME/EDGE/OPERA                             */
+/* ───────────────────────────────────────────────── */
+
 ::-webkit-scrollbar {
     width: 12px;
 }
@@ -289,12 +360,11 @@ main {
     background-color: #a9a7a7;
 }
 
+/* ───────────────────────────────────────────────── */
+/*  9. SEÇÃO DE ENTRADA                              */
+/* ───────────────────────────────────────────────── */
 
-/* ===================================
-   7. FORMULÁRIO E CAMPOS DE ENTRADA
-   =================================== */
-
-.form-container {
+.action-panel {
     display: flex; 
     flex-direction: column; 
     width: 100%; 
@@ -348,20 +418,21 @@ main {
 }
 
 
-/* ===================================
-   8. BOTÕES E CONTROLES
-   =================================== */
+/* ───────────────────────────────────────────────── */
+/*  10. BOTÕES                                       */
+/* ───────────────────────────────────────────────── */
 
 /* Estilos gerais para botões */
 .btn {
     width: 100%;
-    padding: 1.2rem;
+    padding: 1.1rem;
+    padding: clamp(1.1rem, 0.9000000000000004rem + 0.6666666666666657vw, 1.2rem);
     position: relative;
     background: var(--color-secondary);
     margin-bottom: 0.5rem;
     font-size: 1rem;
     font-size: clamp(0.9rem, 0.7333333333333334rem + 0.5555555555555554vw, 1rem);
-    border-radius: 20px;
+    border-radius: 15px;
     font-weight: 700;
     text-align: center;
     cursor: pointer;
@@ -382,7 +453,7 @@ main {
     margin-top: 0.5rem; 
 }
 
-/* Efeito neomórfico para botões principais */
+/* Efeito para botões principais */
 .btn-add, .btn-reveal {
     box-shadow: -6px -6px 10px rgb(228, 229, 226, 0.8),
         6px 6px 10px rgba(0, 0, 0, 0.2);
@@ -420,9 +491,9 @@ main {
     text-align: center;
 }
 
-/* ===================================
-   3. ELEMENTS STYLES
-   =================================== */
+/* ───────────────────────────────────────────────── */
+/*  11. DECORAÇÃO - IMAGEM                           */
+/* ───────────────────────────────────────────────── */
 
 .decoration {
     display: flex;
@@ -439,9 +510,9 @@ main {
     position: relative;
 }
 
-/* ===================================
-   4. FOOTER STYLES
-   =================================== */
+/* ───────────────────────────────────────────────── */
+/*  12. RODAPÉ                                       */
+/* ───────────────────────────────────────────────── */
 
 footer {
     display: flex;
@@ -462,10 +533,9 @@ footer {
 
 .footer-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
     max-width: 1250px;
-    margin: auto 1em;
     gap: 1em;
 }
 
@@ -485,6 +555,7 @@ footer {
 
 .footer-title {
     font-size: 1.3rem;
+    font-size: var(--font-medium);
     font-weight: 500;
     line-height: 3rem;
 }
@@ -503,6 +574,16 @@ footer {
     line-height: 28px;
     font-size: 14px;
     color: #494b4e;
+    text-decoration: none; 
+}
+
+.footer-credits-text a {
+    color: var(--color-secondary);
+    text-decoration: none; 
+}
+
+.footer-credits-text a:hover {
+    text-decoration: underline; 
 }
 
 .footer-contact {
@@ -530,13 +611,13 @@ li a {
     padding: 10px;
 }
 
-li i {
-    font-size: 20px;
+li a:hover {
+    color: #50a9f8; 
 }
 
-/* ===================================
-   5. RESPONSIVENESS STYLES
-   =================================== */
+/* ───────────────────────────────────────────────── */
+/*  13. ESTILOS RESPONSIVOS                          */
+/* ───────────────────────────────────────────────── */
 
 /* Tablets e dispositivos médios */
 @media screen and (max-width: 768px) {
@@ -552,7 +633,6 @@ li i {
         margin-left: 0;
     }
     
-
     .interface-panel {
         min-width: 0;
         z-index: 1;
@@ -590,11 +670,5 @@ li i {
     #participantsList {
         display: grid;
         grid-template-columns: repeat(1, minmax(0, 350px));
-    }
-
-    /* Reduz tamanho da fonte para mensagens de alerta */
-    .alert-message {
-        font-size: 0.875rem;
-        font-size: clamp(0.875rem, 0.6666666666666667rem + 0.6944444444444444vw, 1rem);
     }
 }
