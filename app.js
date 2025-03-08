@@ -1,11 +1,15 @@
+// ─────────────────────────────────────────────────
 // 1. VARIÁVEIS GLOBAIS
+// ─────────────────────────────────────────────────
 
 let participants = []; // Lista oficial de participantes do sorteio 
 let secretPairs = {};   // Objeto para armazenar os pares de amigo secreto 
 let currentPairIndex = 0; // Índice para controlar qual par está sendo exibido
 let entries = []; // Converte o objeto secretPairs em um array de pares [sorteador, amigo secreto]
 
-// 2. FUNÇÕES DE MANIPULAÇÃO DA INTERFACE
+// ─────────────────────────────────────────────────
+// 2. FUNÇÕES UTILITÁRIAS BÁSICAS
+// ─────────────────────────────────────────────────
 
 // <-- Exibe um texto dentro de um elemento HTML especificado -->
 function displayTextOnScreen(tag, text) {
@@ -42,46 +46,21 @@ function ellipsizeText(text, maxLength) {
     return text.length > adjustedMaxLength ? text.slice(0, adjustedMaxLength) + "..." : text;
 }
 
-// <-- Atualiza a lista de amigos na interface -->
-function updateFriendsList() {
-    const list = document.getElementById('participantsList');
-    
-    // Limpa o conteúdo da lista antes de recriá-la
-    list.innerHTML = '';
+// <-- Função que mistura a lista -->
+function shuffleArray(array) {
+    // Percorre o array do último índice até o primeiro
+    for (let i = array.length - 1; i > 0; i--) {
+        // Gera um índice aleatório entre 0 e o índice atual (inclusive)
+        const j = Math.floor(Math.random() * (i + 1));
 
-    // Percorre o array de participantes e cria um item de lista para cada um
-    participants.forEach((friend, index) => {
-        const listItem = createParticipantItem(friend, index);
-        list.prepend(listItem); // Adiciona o item no início da lista
-    });
+        // Troca os elementos nos índices 'i' e 'j'
+        [array[i], array[j]] = [array[j], array[i]];
+    }
 }
 
-// <-- Cria um item de lista para um participante específico -->
-function createParticipantItem(friend, index) {
-    const listItem = document.createElement('li'); // Cria o elemento <li>
-    
-    const container = document.createElement('div'); // Cria um container interno
-    container.className = 'participant-inner'; // Define a classe CSS para estilização
-
-    // Cria um elemento de número (ex: "1.", "2.", "3.")
-    const numberSpan = createSpan(`${index + 1}.`, 'participant-number');
-
-    // Cria um elemento para exibir o nome do participante
-    const nameSpan = createSpan(friend, 'participant-name', index);
-
-    // Cria os botões de ação (editar e excluir)
-    const actionContainer = createActionButtons(index, nameSpan);
-
-    // Monta a estrutura do item adicionando os elementos ao container
-    container.appendChild(numberSpan);
-    container.appendChild(nameSpan);
-    container.appendChild(actionContainer);
-
-    // Adiciona o container ao item da lista
-    listItem.appendChild(container);
-
-    return listItem; // Retorna o item pronto para ser adicionado à lista
-}
+// ─────────────────────────────────────────────────
+// 3. FUNÇÕES DE MANIPULAÇÃO DOM
+// ─────────────────────────────────────────────────
 
 // <-- Cria um elemento <span> com o texto e classe informados -->
 function createSpan(text, className, index = null) {
@@ -94,6 +73,16 @@ function createSpan(text, className, index = null) {
         span.setAttribute('data-index', index);
     }
     return span; // Retorna o span criado
+}
+
+// <-- Função reutilizável para criar um botão -->
+function createButton(innerHtml, className, onClick, ariaLabel) {
+    const button = document.createElement('button'); // Cria um botão
+    button.innerHTML = innerHtml; // Define o ícone do botão
+    button.className = className; // Adiciona a classe CSS
+    button.onclick = onClick; // Define a ação ao clicar
+    button.setAttribute('aria-label', ariaLabel); // Adiciona acessibilidade
+    return button; // Retorna o botão criado
 }
 
 // <-- Cria o container com os botões de ação (editar e excluir) -->
@@ -124,45 +113,223 @@ function createActionButtons(index, nameSpan) {
     return actionContainer; // Retorna o container com os botões
 }
 
-// <-- Função reutilizável para criar um botão -->
-function createButton(innerHtml, className, onClick, ariaLabel) {
-    const button = document.createElement('button'); // Cria um botão
-    button.innerHTML = innerHtml; // Define o ícone do botão
-    button.className = className; // Adiciona a classe CSS
-    button.onclick = onClick; // Define a ação ao clicar
-    button.setAttribute('aria-label', ariaLabel); // Adiciona acessibilidade
-    return button; // Retorna o botão criado
+// <-- Cria um item de lista para um participante específico -->
+function createParticipantItem(friend, index) {
+    const listItem = document.createElement('li'); // Cria o elemento <li>
+    
+    const container = document.createElement('div'); // Cria um container interno
+    container.className = 'participant-inner'; // Define a classe CSS para estilização
+
+    // Cria um elemento de número (ex: "1.", "2.", "3.")
+    const numberSpan = createSpan(`${index + 1}.`, 'participant-number');
+
+    // Cria um elemento para exibir o nome do participante
+    const nameSpan = createSpan(friend, 'participant-name', index);
+
+    // Cria os botões de ação (editar e excluir)
+    const actionContainer = createActionButtons(index, nameSpan);
+
+    // Monta a estrutura do item adicionando os elementos ao container
+    container.appendChild(numberSpan);
+    container.appendChild(nameSpan);
+    container.appendChild(actionContainer);
+
+    // Adiciona o container ao item da lista
+    listItem.appendChild(container);
+
+    return listItem; // Retorna o item pronto para ser adicionado à lista
 }
 
-// <-- Função responsável por alternar a visibilidade da lista de participantes e atualizar o texto do botão -->
+// <-- Handler para o evento de clique duplo -->
+function handleDoubleClick(event) {
+    // Localiza o elemento span com a classe 'participant-name' mais próximo do evento
+    const nameSpan = event.target.closest('.participant-name');
+    
+    // Se encontrou um elemento válido, inicia a edição inline
+    if (nameSpan) {
+        // Chama a função que prepara o nome para edição (torna editável e seleciona o texto)
+        startInlineEdit(nameSpan);
+    }
+}
+
+// <-- Handler para validar e atualizar um nome após edição -->
+function handleNameUpdate(nameSpan) {
+    // Obtém o novo nome removendo espaços em branco no início e fim
+    const newName = nameSpan.textContent.trim();
+    
+    // Obtém o índice do participante a partir do atributo data-index
+    const index = parseInt(nameSpan.getAttribute('data-index'), 10);
+
+    // Verifica se o nome está vazio
+    if (newName === '') {
+        // Exibe mensagem de erro caso o nome esteja vazio
+        showAlertMessage("Nome não pode estar vazio!");
+        // Restaura o nome original
+        nameSpan.textContent = participants[index];
+        return false;
+    } 
+    
+    // Verifica se o nome já existe na lista (ignorando maiúsculas/minúsculas)
+    // Exceção: permite manter o mesmo nome com diferentes maiúsculas/minúsculas
+    if (
+        participants.map(p => p.toLowerCase()).includes(newName.toLowerCase()) && 
+        newName.toLowerCase() !== participants[index].toLowerCase()
+    ) {
+        // Exibe mensagem de erro caso o nome já exista
+        showAlertMessage(`<span class="highlight-random">${newName}</span> já está na lista do sorteio!`);
+        // Restaura o nome original
+        nameSpan.textContent = participants[index];
+        return false;
+    }
+    
+    // Se passou pelas validações, atualiza o nome no array de participantes
+    participants[index] = newName;
+    
+    // Prepara o nome para exibição na mensagem (com reticências se for muito longo)
+    const ellipsizedName = ellipsizeText(newName, 11);
+    
+    // Exibe mensagem de sucesso
+    showAlertMessage(`Nome atualizado para <span class="highlight-random">${ellipsizedName}</span>!`);
+    
+    // Atualiza a lista visual de participantes
+    updateFriendsList();
+    return true;
+}
+
+// <-- Handler para o evento de teclado -->
+function handleKeyDown(event) {
+    // Localiza o elemento span editável mais próximo
+    const nameSpan = event.target.closest('.participant-name');
+    
+    // Verifica se encontrou um span que está sendo editado
+    if (nameSpan && nameSpan.getAttribute('contenteditable') === 'true') {
+        // Se a tecla pressionada for Enter
+        if (event.key === 'Enter') {
+            // Impede o comportamento padrão (quebra de linha)
+            event.preventDefault();
+            
+            // Tenta atualizar o nome e finaliza a edição
+            handleNameUpdate(nameSpan);
+            nameSpan.removeAttribute('contenteditable');
+        } 
+        // Se a tecla pressionada for Escape
+        else if (event.key === 'Escape') {
+            // Obtém o índice do participante
+            const index = parseInt(nameSpan.getAttribute('data-index'), 10);
+            
+            // Restaura o texto original sem salvar alterações
+            nameSpan.textContent = participants[index];
+            
+            // Finaliza o modo de edição
+            nameSpan.removeAttribute('contenteditable');
+        }
+    }
+}
+
+// <-- Handler para o evento de perda de foco -->
+function handleBlur(event) {
+    // Localiza o elemento span editável mais próximo
+    const nameSpan = event.target.closest('.participant-name');
+    
+    // Verifica se encontrou um span que está sendo editado
+    if (nameSpan && nameSpan.getAttribute('contenteditable') === 'true') {
+        // Quando o usuário clica fora do elemento, salva as alterações
+        handleNameUpdate(nameSpan);
+        
+        // Finaliza o modo de edição
+        nameSpan.removeAttribute('contenteditable');
+    }
+}
+
+// ─────────────────────────────────────────────────
+// 4. FUNÇÕES DE INTERFACE DO USUÁRIO
+// ─────────────────────────────────────────────────
+
+// <-- Atualiza a lista de amigos na interface -->
+function updateFriendsList() {
+    const list = document.getElementById('participantsList');
+    
+    // Limpa o conteúdo da lista antes de recriá-la
+    list.innerHTML = '';
+
+    // Percorre o array de participantes e cria um item de lista para cada um
+    participants.forEach((friend, index) => {
+        const listItem = createParticipantItem(friend, index);
+        list.prepend(listItem); // Adiciona o item no início da lista
+    });
+}
+
+// <-- Função para atualizar o texto do botão com base na tela atual -->
+function updateParticipantsButtonText() {
+    const participants = document.getElementById('participants'); // Obtém a lista de participantes
+    const participantsBtn = document.querySelector('.participants-btn'); // Obtém o botão que controla a lista
+
+    if (!participantsBtn || !participants) return; // Sai da função se os elementos não existirem
+
+    const isSmallScreen = window.innerWidth < 400; // Verifica se a tela é menor que 400px
+    const isCollapsed = participants.classList.contains('collapsed'); // Verifica se a lista está recolhida
+
+    // Define o texto do botão conforme o tamanho da tela e o estado da lista
+    participantsBtn.textContent = isCollapsed
+        ? (isSmallScreen ? 'Lista +' : 'Lista de Amigos +') // Texto quando a lista está recolhida
+        : (isSmallScreen ? 'Lista -' : 'Lista de Amigos -'); // Texto quando a lista está visível
+}
+
+// <-- Função que alterna a visibilidade da lista de participantes -->
 function toggleParticipants() {
     const participants = document.getElementById('participants');
-    const participantsBtn = document.querySelector('.participants-btn');
-
+    
     // Alterna a classe 'collapsed' para esconder/exibir a lista
     participants.classList.toggle('collapsed');
-
-    // Define o texto do botão com base no tamanho da tela e no estado da lista
-    const isSmallScreen = window.innerWidth < 400;
-    participantsBtn.textContent = participants.classList.contains('collapsed')
-        ? (isSmallScreen ? 'Lista +' : 'Lista de Amigos +')
-        : (isSmallScreen ? 'Lista -' : 'Lista de Amigos -');
+    
+    // Chama a função para atualizar o texto do botão
+    updateParticipantsButtonText();
 }
 
-// <-- Adiciona um evento que escuta quando a tela é redimensionada. -->
-window.addEventListener("resize", () => {
-    // Pega o botão da lista de participantes novamente.
-    const participantsBtn = document.querySelector('.participants-btn');
+// <-- Alterna a visibilidade de elementos -->
+function toggleElementsVisibility(action, selectors) {
+    // Define se deve remover (mostrar) ou adicionar (ocultar) a classe
+    const method = action === 'show' ? 'remove' : 'add';
     
-    // Se o botão não existir, a função não faz nada e sai.
-    if (!participantsBtn) return;
+    // Garante que "selectors" seja um array e percorre cada item
+    (Array.isArray(selectors) ? selectors : [selectors]).forEach(selector => {
+        // Obtém o elemento do DOM se for uma string, ou usa o próprio elemento
+        const element = typeof selector === 'string' ? document.querySelector(selector) : selector;
+        
+        // Se o elemento existir, adiciona ou remove a classe "collapsed"
+        element?.classList[method]('collapsed');
+    });
+}
 
-    // Verifica novamente se a largura da tela é menor que 400 pixels.
-    const isSmallScreen = window.innerWidth < 400;
+// <-- Alterna a ativação de botões definindo ou removendo o atributo "disabled" -->
+function toggleButtonsState(action, selectors) {
+    // Define se deve remover o atributo "disabled" (ativar) ou adicionar (desativar)
+    const disabledState = action !== 'enable'; // Se a ação for 'enable', disabledState será false (ativo); senão, true (desativado).
     
-    // Atualiza o texto do botão de acordo com o tamanho da tela.
-    participantsBtn.textContent = isSmallScreen ? 'Lista +' : 'Lista de Amigos +';
-});
+    // Garante que "selectors" seja tratado como um array e percorre cada item
+    (Array.isArray(selectors) ? selectors : [selectors]).forEach(selector => {
+        
+        // Se o seletor for uma string (ID ou classe)
+        if (typeof selector === 'string') {
+            
+            // Verifica se o seletor contém um ponto (.) para identificar se é uma classe
+            if (selector.includes('.')) {
+                // Se for uma classe, seleciona todos os elementos correspondentes
+                const buttons = document.querySelectorAll(selector);
+                // Para cada botão encontrado pela classe, altera o atributo "disabled"
+                buttons.forEach(button => button.disabled = disabledState);
+            } else {
+                // Caso contrário, é um seletor de ID, então seleciona um único botão
+                const button = document.querySelector(selector);
+                // Se o botão existir, altera o atributo "disabled"
+                if (button) button.disabled = disabledState;
+            }
+        } else {
+            // Se o seletor já for um elemento DOM (não uma string), aplica diretamente o atributo "disabled"
+            selector.disabled = disabledState;
+        }
+    });
+}
 
 // <-- Oculta ou exibe o nome do amigo sorteado -->
 function hideSelectedFriend() {
@@ -175,8 +342,16 @@ function hideSelectedFriend() {
     hideBtn.textContent = resultElement.classList.contains('collapsed') ? 'Exibir +' : 'Ocultar -';
 }
 
+// <-- Mostra ou esconde o botão de ocultar o jogador sorteado. -->
+function toggleHideButton(show) {
+    const hideBtn = document.getElementById("hideBtn");
+    if (hideBtn) {
+        hideBtn.style.display = show ? "inline" : "none";
+    }
+}
+
 // ─────────────────────────────────────────────────
-// 3. FUNÇÕES DE GERENCIAMENTO
+// 5. FUNÇÕES DE GERENCIAMENTO DE PARTICIPANTES
 // ─────────────────────────────────────────────────
 
 // <-- Função responsável por adicionar um novo amigo à lista de participantes -->
@@ -199,7 +374,7 @@ function insertFriend() {
         // Mensagem diferente baseada no tamanho da tela
         const duplicateMessage = isSmallScreen
             ? `<span class="highlight-random">${ellipsizedName}</span> já está na lista!`
-            : `<span class="highlight-random">${ellipsizedName}</span> já está na lista do sorteio!`;
+            : `<span class="highlight-random">${ellipsizedName}</span> já está na lista do sorteio!`;   
             
         showAlertMessage(duplicateMessage);
     } else {
@@ -222,13 +397,6 @@ function insertFriend() {
     }
 }
 
-// <-- Adiciona um evento ao campo de input para detectar quando o usuário pressionar Enter -->
-document.getElementById("inputField").addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-        document.getElementById("addButton").click();
-    }
-});
-
 // <-- Função para deletar um participante da lista -->
 function deleteFriend(index) {
     // Remove o participante do array 'participants' na posição indicada pelo índice
@@ -238,7 +406,7 @@ function deleteFriend(index) {
     updateFriendsList();
     
     // Exibe uma mensagem informando que o participante foi removido
-    showAlertMessage(`Participante removido da lista!`);
+    showAlertMessage("Participante removido da lista!");
 }
 
 // <-- Função para iniciar a edição inline do nome de um participante -->
@@ -257,71 +425,6 @@ function startInlineEdit(nameSpan) {
     selection.addRange(range); // Seleciona todo o conteúdo do elemento
 }
 
-// <-- Handler para o evento de clique duplo -->
-function handleDoubleClick(event) {
-    const nameSpan = event.target.closest('.participant-name');
-    if (nameSpan) {
-        startInlineEdit(nameSpan);
-    }
-}
-
-// <-- Handler para validar e atualizar um nome após edição -->
-function handleNameUpdate(nameSpan) {
-    // Obtém o novo nome e o índice do participante
-    const newName = nameSpan.textContent.trim();
-    const index = parseInt(nameSpan.getAttribute('data-index'), 10);
-
-    // Verifica se o nome está vazio
-    if (newName === '') {
-        showAlertMessage("Nome não pode estar vazio!");
-        nameSpan.textContent = participants[index]; // Restaura nome original
-        return false;
-    } 
-    
-    // Verifica se o nome já existe na lista (ignorando maiúsculas/minúsculas)
-    if (
-        participants.map(p => p.toLowerCase()).includes(newName.toLowerCase()) && 
-        newName.toLowerCase() !== participants[index].toLowerCase()
-    ) {
-        showAlertMessage(`<span class="highlight-random">${newName}</span> já está na lista do sorteio!`);
-        nameSpan.textContent = participants[index]; // Restaura nome original
-        return false;
-    }
-    
-    // Atualiza o nome e a lista
-    participants[index] = newName;
-    showAlertMessage(`Nome atualizado para <span class="highlight-random">${newName}</span>!`);
-    updateFriendsList();
-    return true;
-}
-
-// <-- Handler para o evento de teclado -->
-function handleKeyDown(event) {
-    const nameSpan = event.target.closest('.participant-name');
-    
-    if (nameSpan && nameSpan.getAttribute('contenteditable') === 'true') {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            handleNameUpdate(nameSpan);
-            nameSpan.removeAttribute('contenteditable');
-        } else if (event.key === 'Escape') {
-            const index = parseInt(nameSpan.getAttribute('data-index'), 10);
-            nameSpan.textContent = participants[index];
-            nameSpan.removeAttribute('contenteditable');
-        }
-    }
-}
-
-// <-- Handler para o evento de perda de foco -->
-function handleBlur(event) {
-    const nameSpan = event.target.closest('.participant-name');
-    
-    if (nameSpan && nameSpan.getAttribute('contenteditable') === 'true') {
-        handleNameUpdate(nameSpan);
-        nameSpan.removeAttribute('contenteditable');
-    }
-}
-
 // <-- Função que configura a edição inline dos nomes na lista de participantes -->
 function setupInlineEdit() {
     const participantsList = document.getElementById('participantsList');
@@ -332,24 +435,9 @@ function setupInlineEdit() {
     participantsList.addEventListener('blur', handleBlur, true);
 }
 
-// <-- Inicializa a funcionalidade de edição inline -->
-setupInlineEdit();
-
 // ─────────────────────────────────────────────────
-// 4. FUNÇÕES PRINCIPAIS DO SORTEIO
+// 6. FUNÇÕES DO SORTEIO
 // ─────────────────────────────────────────────────
-
-// <-- Função que mistura a lista -->
-function shuffleArray(array) {
-    // Percorre o array do último índice até o primeiro
-    for (let i = array.length - 1; i > 0; i--) {
-        // Gera um índice aleatório entre 0 e o índice atual (inclusive)
-        const j = Math.floor(Math.random() * (i + 1));
-
-        // Troca os elementos nos índices 'i' e 'j'
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-}
 
 // <-- Função que gera pares para o sorteio do Amigo Secreto -->
 function generatePairs(participants) {
@@ -386,33 +474,21 @@ function generatePairs(participants) {
 
 // <-- Função responsável por exibir o resultado do sorteio na tela -->
 function displayDrawResult(drawer, friend) {
-    // A função displayTextOnScreen é chamada para exibir o texto no elemento com o id 'drawResult'
-    // O texto a ser exibido inclui o nome do participante sorteado ('drawer') e o nome do amigo secreto ('friend')
-    // Além disso, a função cria um botão para ocultar o amigo secreto
     displayTextOnScreen(
-        '#drawResult',  // Seleciona o elemento da tela onde o resultado será exibido (usando o id 'drawResult')
+        '#drawResult',  // Elemento onde o resultado será mostrado
         
-        // O texto exibido inclui:
+        // Mensagem formatada com destaque para os nomes e botão de ocultar
         `O amigo secreto de <span class="highlight-current">${drawer}</span> é: 
         <span id="selected-friend" class="highlight-random">${friend}</span>
         <button id="hideBtn" class="hide-btn" onclick="hideSelectedFriend()">Ocultar -</button>`
-
-        // O nome do participante sorteado (drawer) e o amigo secreto (friend) são inseridos no HTML dinamicamente
-        // A classe 'highlight-current' é usada para destacar o nome do participante sorteado
-        // A classe 'highlight-random' é usada para destacar o nome do amigo secreto
-        // O botão 'Ocultar -' tem um evento de clique que chama a função hideSelectedFriend para ocultar o nome do amigo secreto
     );
 }
 
 // ─────────────────────────────────────────────────
-// 5. FUNÇÕES QUE CONTROLAM O FLUXO DO SORTEIO
+// 7. FUNÇÕES DO FLUXO DO SORTEIO
 // ─────────────────────────────────────────────────
 
-/**
- * <-- Atualiza o texto e o estado de um botão com base no estado atual do sorteio. -->
- * <-- @param {HTMLElement} buttonElement - O elemento do botão que será atualizado.-->
- * <-- @param {string} newState - O estado atual do sorteio que determinará o texto exibido no botão.  --> */
-
+// <-- Atualiza o texto e o estado de um botão com base no estado atual do sorteio -->
 function updateDrawButtonState(buttonElement, newState) {
     const buttonStateText = {
         'continue': 'Continuar',
@@ -425,7 +501,7 @@ function updateDrawButtonState(buttonElement, newState) {
     buttonElement.setAttribute('data-state', newState); 
 }
 
-/* <-- Controla o fluxo do sorteio com base no estado do botão --> */
+// <-- Controla o fluxo do sorteio com base no estado do botão -->
 function drawRandomParticipant() {
     const button = document.getElementById('drawButton');
     const currentState = button.getAttribute('data-state'); 
@@ -441,25 +517,31 @@ function drawRandomParticipant() {
     }
 }
 
-/* <-- Inicia o sorteio, gera os pares e prepara a interface. --> */
+// <-- Inicia o sorteio, gera os pares e prepara a interface -->
 function startDraw(button) {
+    // Verifica mínimo de 2 participantes
     if (participants.length < 2) {
         showAlertMessage("Por favor, adicione mais amigos!");
         return;
     }
 
-    toggleParticipants();
+    // Gera os pares do amigo secreto
     secretPairs = generatePairs(participants);
-    
     entries = Object.entries(secretPairs);
     currentPairIndex = 0;
 
-    toggleAddButton(false);
+    // Desativa botões de gerenciamento de participantes
+    toggleButtonsState('disable', ['#addButton', '.edit-btn', '.delete-btn']);
+    
+    // Oculta elementos não necessários durante o sorteio
+    toggleElementsVisibility('hide', ['.participants', '#inputField', 'label[for="inputField"]']);
+    
+    updateParticipantsButtonText();
     displayTextOnScreen('#drawResult', 'Está tudo certo! Agora clique em Preparar!');
     updateDrawButtonState(button, 'prepare');
 }
 
-/* <-- Prepara o próximo sorteador para revelar o amigo secreto --> */
+// <-- Prepara o próximo sorteador para revelar o amigo secreto -->
 function prepareNextDrawer(button) {
     if (currentPairIndex < entries.length) {
         const [drawer] = entries[currentPairIndex];
@@ -472,13 +554,12 @@ function prepareNextDrawer(button) {
     }
 }
 
-/* <-- Revela o amigo secreto do sorteador atual. --> */
+// <-- Revela o amigo secreto do sorteador atual -->
 function revealSecretFriend(button) {
     if (currentPairIndex < entries.length) {
         const [drawer, friend] = entries[currentPairIndex];
         displayDrawResult(drawer, friend);
         toggleHideButton(true);
-
         currentPairIndex++;
 
         if (currentPairIndex >= entries.length) {
@@ -489,29 +570,37 @@ function revealSecretFriend(button) {
     }
 }
 
-/* <-- Reinicia o sorteio e permite adicionar novos participantes --> */
+// <-- Reinicia o sorteio e limpa os dados -->
 function resetDraw(button) {
     participants = [];
     secretPairs = {};
     currentPairIndex = 0;
-
     updateFriendsList();
     displayTextOnScreen('#drawResult', 'Sorteio reiniciado! Adicione novos participantes.');
 
-    toggleParticipants();
-    toggleAddButton(true);
+    // Ativa botões de gerenciamento de participantes
+    toggleButtonsState('enable', ['#addButton', '.edit-btn', '.delete-btn']);
+
+    // Exibe elementos necessários para o sorteio
+    toggleElementsVisibility('show', ['.participants', '#inputField', 'label[for="inputField"]']);
+
+    updateParticipantsButtonText();
     updateDrawButtonState(button, 'continue');
 }
 
-/* <-- Habilita ou desabilita o botão de adicionar participantes. --> */
-function toggleAddButton(enable) {
-    document.getElementById('addButton').disabled = !enable;
-}
+// ─────────────────────────────────────────────────
+// 8. INICIALIZAÇÃO E EVENTOS
+// ─────────────────────────────────────────────────
 
-/* <-- Mostra ou esconde o botão de ocultar o sorteio. --> */
-function toggleHideButton(show) {
-    const hideBtn = document.getElementById("hideBtn");
-    if (hideBtn) {
-        hideBtn.style.display = show ? "inline" : "none";
+// <-- Inicializa a funcionalidade de edição inline -->
+setupInlineEdit();
+
+// <-- Adiciona um evento ao campo de input para detectar quando o usuário pressionar Enter -->
+document.getElementById("inputField").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        document.getElementById("addButton").click();
     }
-}
+});
+
+// <-- Adiciona um evento que escuta quando a tela é redimensionada -->
+window.addEventListener("resize", updateParticipantsButtonText);
