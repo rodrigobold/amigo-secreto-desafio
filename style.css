@@ -1,14 +1,34 @@
-
-/* ───────────────────────────────────────────────── */
-/*  1. CONFIGURAÇÕES INICIAIS                        */
-/* ───────────────────────────────────────────────── */
-
 /*  Importação de fontes externas */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+/* ───────────────────────────────────────────────── */
+/*  1. RESET E CONFIGURAÇÕES INICIAIS                */
+/* ───────────────────────────────────────────────── */
+
+/* Reset global para garantir consistência entre navegadores */
+*, *::after, *::before, html, body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+/* Configurações básicas do documento */
+html, body {
+    font-size: 100%;
+    line-height: 26px;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+}
+
+/* ───────────────────────────────────────────────── */
+/*  2. VARIÁVEIS GLOBAIS                            */
+/* ───────────────────────────────────────────────── */
+
 /* Variáveis globais */
 :root {
-    
     /* Cores */
     --color-primary: #ffffff;
     --color-secondary: #3fa9f5;
@@ -22,36 +42,18 @@
     --font-large: clamp(1rem, 0.68rem + 1.37vw, 1.5rem);
 }
 
-/* Reset global para garantir consistência entre navegadores */
-*, *::after, *::before, html, body {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-
-    text-decoration: none;
-    text-overflow: ellipsis;
-    word-break: break-word;
-}
-
-/* Configurações básicas do documento */
-html, body {
-    font-size: 100%;
-    line-height: 26px;
-    -webkit-text-size-adjust: 100%;
-    background-color: var(--color-primary);
-    overflow-x: hidden;
-}
-
+/* Container principal que organiza todo o conteúdo em coluna */
 body {
     display: flex;
     flex-direction: column;
+    background-color: var(--color-primary);
 }
 
-
 /* ───────────────────────────────────────────────── */
-/*  2. CABEÇALHO                                     */
+/*  3. CABEÇALHO                                     */
 /* ───────────────────────────────────────────────── */
 
+/* Seção de cabeçalho do site */
 header {
     position: relative;
     padding: 16px 20px; 
@@ -59,6 +61,7 @@ header {
     background-color: var(--color-secondary);
 }
 
+/* Container que limita a largura do conteúdo do cabeçalho */
 .header-content {
     width: 100%;
     max-width: 1250px;
@@ -66,9 +69,9 @@ header {
     padding: 0 15px;
 }
 
+/* Título principal do site no cabeçalho */
 .title {
     font-family: sans-serif;
-    font-size: 1rem;
     font-size: var(--font-large);
     color: var(--color-primary);
     font-weight: 600;
@@ -78,11 +81,11 @@ header {
     margin-left: 1.3em;
 }
 
-
 /* ───────────────────────────────────────────────── */
-/*  3. CONTAINER PRINCIPAL                           */
+/*  4. CONTAINER PRINCIPAL                           */
 /* ───────────────────────────────────────────────── */
 
+/* Seção principal que contém todo o conteúdo da aplicação */
 main {
     display: flex;
     justify-content: center;
@@ -95,7 +98,7 @@ main {
     gap: 50px;
 }
 
-/* Painel de interface - contém controles e resultados */
+/* Painel que contém todos os controles e resultados da interface */
 .interface-panel {
     display: flex;  
     flex-direction: column;
@@ -104,16 +107,15 @@ main {
     max-width: 10%;
 }
 
-
 /* ───────────────────────────────────────────────── */
-/*  4. ÁREA DE RESULTADO DO SORTEIO                  */
+/*  5. ÁREA DE RESULTADO DO SORTEIO                  */
 /* ───────────────────────────────────────────────── */
 
+/* Elemento que exibe o resultado do sorteio */
 #drawResult {
     display: inline-block;
     min-height: 4.5em;
     font-family: Poppins, sans-serif;
-    font-size: 1.3rem;
     font-size: var(--font-medium);
     color: var(--color-tertiary);
     font-weight: 600;
@@ -121,31 +123,31 @@ main {
     white-space: normal;
 }
 
-/* Estilos para destacar texto no resultado */
+/* Destaque para o nome do sorteador atual */
 .highlight-current {
     color: var(--color-secondary); /* Destaque azul para o sorteador atual */
 }
 
+/* Destaque para o nome do amigo sorteado */
 .highlight-random {
     color: var(--color-highlight); /* Destaque verde para o amigo sorteado */
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* Classe para esconder o amigo sorteado */
+/* Estado colapsado do nome do amigo sorteado - oculto */
 .highlight-random.collapsed {
     opacity: 0;
     visibility: hidden;
     display: none;
 }
 
-
 /* ───────────────────────────────────────────────── */
-/*  5. MENSAGENS DE ALERTA                           */
+/*  6. MENSAGENS DE ALERTA                           */
 /* ───────────────────────────────────────────────── */
 
+/* Container para exibir mensagens de alerta ao usuário */
 .alert-message {
     font-family: Poppins, sans-serif;
-    font-size: 0.875rem;
     font-size: var(--font-small);
     min-height: 3em;
     padding: 0.8em 0;
@@ -159,18 +161,17 @@ main {
     transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Transição suave */
 }
 
-
 /* ───────────────────────────────────────────────── */
-/*  6. LISTA DE PARTICIPANTES                        */
+/*  7. LISTA DE PARTICIPANTES                        */
 /* ───────────────────────────────────────────────── */
 
-/* Container para o controle de participantes */
+/* Container principal para a seção de participantes */
 .participants-container {
     position: relative;
     width: 100%;
 }
 
-/* Botão para alternar visibilidade da lista */
+/* Botão que alterna a visibilidade da lista de participantes */
 .participants-btn {
     position: absolute;
     top: 0;
@@ -182,7 +183,6 @@ main {
     border: none;
     border-radius: 0 0 15px 15px;
     font-family: Poppins, sans-serif;
-    font-size: 1em;
     font-size: clamp(0.9rem, 0.733rem + 0.556vw, 1rem);
     color: var(--color-primary);
     background: var(--color-secondary);
@@ -192,7 +192,7 @@ main {
     text-overflow: ellipsis;
 }
 
-/* Painel de participantes */
+/* Painel que contém a lista de participantes */
 .participants {
     position: relative; 
     display: flex; 
@@ -206,13 +206,9 @@ main {
     box-shadow: rgba(207, 221, 248, 0.842) 0px 12px 48px -8px;
     border-top-width: 0px;
     margin-bottom: 2rem;
+    opacity: 1; /* Estado inicial visível */
+    visibility: visible; /* Estado inicial visível */
     transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-/* Classe para esconder o painel de participantes */
-.participants.collapsed {
-    opacity: 0;
-    visibility: hidden;
 }
 
 /* Rótulo para a lista de participantes */
@@ -227,7 +223,7 @@ main {
     z-index: 1; 
 }
 
-/* Lista de participantes em formato grid */
+/* Lista principal de participantes em formato grid */
 #participantsList {
     display: grid; 
     grid-template-columns: repeat(2, minmax(0, 250px)); /* Grid de 2 colunas */
@@ -240,7 +236,7 @@ main {
     padding: 1rem 1rem 0 1rem; 
 }
 
-/* Item de participante na lista */
+/* Item individual na lista de participantes */
 #participantsList li {
     display: flex;
     align-items: center;
@@ -255,6 +251,29 @@ main {
     border-radius: 5px;
 }
 
+/* Estados colapsados para painel de participantes e campo de entrada */
+.participants.collapsed,
+#inputField.collapsed,
+label[for="inputField"].collapsed {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Estados não-colapsados para painel de participantes e campo de entrada */
+.participants:not(.collapsed),
+#inputField:not(.collapsed),
+label[for="inputField"]:not(.collapsed) {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+/* ───────────────────────────────────────────────── */
+/*  8. GERENCIAMENTO DE PARTICIPANTES                */
+/* ───────────────────────────────────────────────── */
+
+/* Container interno de um item de participante */
 .participant-inner {
     position: relative;
     display: flex;
@@ -263,6 +282,7 @@ main {
     width: 100%;
 }
 
+/* Número de ordem do participante na lista */
 .participant-number {
     position: absolute;
     left: 0;
@@ -272,6 +292,7 @@ main {
     padding-right: 0.2em;
 }
 
+/* Nome do participante na lista */
 .participant-name {
     align-items: center;
     position: relative;
@@ -283,16 +304,14 @@ main {
     text-overflow: ellipsis;
 }
 
-/* ───────────────────────────────────────────────── */
-/*  7. GERENCIAMENTO DE PARTICIPANTES                */
-/* ───────────────────────────────────────────────── */
-
+/* Container para botões de ações nos itens de participantes */
 .participant-actions {
     position: absolute;
     right: 0;
     flex-shrink: 0;
 }
 
+/* Botões de editar e excluir participantes */
 .edit-btn, .delete-btn {
     display: flex;
     align-items: end;
@@ -304,66 +323,88 @@ main {
     transition: color 0.3s ease;
 }
 
-.edit-btn:hover {
-    color: #4CAF50; /* Verde para editar */
+/* Estilos para botões desabilitados */
+.edit-btn.disabled, 
+.delete-btn.disabled {
+    opacity: 0.5;
 }
 
+/* Efeito de hover para botões desabilitados (apenas visual) */
+.edit-btn.disabled:hover, 
+.delete-btn.disabled:hover {
+    opacity: 0.5;
+    color: #a9a7a7; /* Cor desejada para o estado desabilitado */
+}
+
+/* Estado hover do botão de editar */
+.edit-btn:hover {
+    color: var(--color-highlight); /* Verde para editar */
+}
+
+/* Estado hover do botão de excluir */
 .delete-btn:hover {
     color: #F44336; /* Vermelho para deletar */
 }
 
+/* Ícones dentro dos botões de ação */
 .participant-actions i {
     font-size: 0.7em;
 }
 
-/* Estilo para o nome do participante quando está sendo editado */
+/* Estilo para o nome do participante em modo de edição */
 .participant-name[contenteditable="true"] {
     display: flex;
     overflow-x: auto;         /* Permite a rolagem horizontal */
     text-overflow: unset;     /* Desativa o ellipsis */
     max-width: calc(100% - 45px); /* Limita a largura, mas com rolagem */
-    background-color: #f0f0f0; /* Cor de fundo enquanto edita */
+    background-color: #f0f0f0; 
     outline: none;       /* Remove a borda de foco */
-    padding: 2px;        /* Adiciona um pequeno padding para facilitar a edição */
+    padding: 2px;        
 }
 
-/* Esconde a barra de rolagem horizontal */
+/* Remove a barra de rolagem horizontal no nome editável */
 .participant-name::-webkit-scrollbar {
     display: none;  /* Oculta a barra de rolagem */
 }
 
+/* Estado de foco no nome editável */
 .participant-name[contenteditable="true"]:focus {
     background-color: rgb(226, 226, 226);
 }
 
 /* ───────────────────────────────────────────────── */
-/*  8. ESTILIZANDO A BARRA DE ROLAGEM                */
+/*  9. ESTILIZANDO A BARRA DE ROLAGEM                */
 /*     CHROME/EDGE/OPERA                             */
 /* ───────────────────────────────────────────────── */
 
+/* Largura da barra de rolagem */
 ::-webkit-scrollbar {
     width: 12px;
 }
 
+/* Área de fundo da barra de rolagem */
 ::-webkit-scrollbar-track {
     background-color: #f1f1f1;
     border-radius: 10px;
 }
 
+/* Indicador deslizante da barra de rolagem */
 ::-webkit-scrollbar-thumb {
     background-color: var(--color-auxiliary);
     border-radius: 10px;
     border: 3px solid #f1f1f1;
 }
 
+/* Estado hover do indicador da barra de rolagem */
 ::-webkit-scrollbar-thumb:hover {
     background-color: #a9a7a7;
 }
 
 /* ───────────────────────────────────────────────── */
-/*  9. SEÇÃO DE ENTRADA                              */
+/*  10. SEÇÃO DE ENTRADA                             */
 /* ───────────────────────────────────────────────── */
 
+/* Painel de ações e entrada de dados */
 .action-panel {
     display: flex; 
     flex-direction: column; 
@@ -376,7 +417,7 @@ main {
     width: 100%; 
 }
 
-/* Campo de entrada de texto */
+/* Campo de entrada de texto com estilo moderno */
 .input-field {
     width: 100%; 
     height: 3.5em; 
@@ -417,20 +458,17 @@ main {
     border-radius: 20px; 
 }
 
-
 /* ───────────────────────────────────────────────── */
-/*  10. BOTÕES                                       */
+/*  11. BOTÕES                                       */
 /* ───────────────────────────────────────────────── */
 
-/* Estilos gerais para botões */
+/* Estilo base para todos os botões */
 .btn {
     width: 100%;
-    padding: 1.1rem;
     padding: clamp(1.1rem, 0.9000000000000004rem + 0.6666666666666657vw, 1.2rem);
     position: relative;
     background: var(--color-secondary);
     margin-bottom: 0.5rem;
-    font-size: 1rem;
     font-size: clamp(0.9rem, 0.7333333333333334rem + 0.5555555555555554vw, 1rem);
     border-radius: 15px;
     font-weight: 700;
@@ -440,20 +478,22 @@ main {
     border: none;
 }
 
-/* Botões específicos com espaçamento */
+/* Botão de adicionar participante */
 .btn-add {
     margin-top: 1rem; 
 }
 
+/* Estado desabilitado do botão adicionar */
 .btn-add:disabled {
     background-color: #a9a7a7; 
 }
 
+/* Botão para revelar resultado do sorteio */
 .btn-reveal {
     margin-top: 0.5rem; 
 }
 
-/* Efeito para botões principais */
+/* Efeito 3D para botões principais */
 .btn-add, .btn-reveal {
     box-shadow: -6px -6px 10px rgb(228, 229, 226, 0.8),
         6px 6px 10px rgba(0, 0, 0, 0.2);
@@ -475,7 +515,7 @@ main {
     color: #79e3b6;
 }
 
-
+/* Botão para esconder elementos (inicialmente oculto) */
 .hide-btn {
     display: none; /* Inicialmente oculto */
     align-items: center;
@@ -492,9 +532,10 @@ main {
 }
 
 /* ───────────────────────────────────────────────── */
-/*  11. DECORAÇÃO - IMAGEM                           */
+/*  12. DECORAÇÃO - IMAGEM                           */
 /* ───────────────────────────────────────────────── */
 
+/* Container para elementos decorativos */
 .decoration {
     display: flex;
     position: relative;
@@ -506,14 +547,16 @@ main {
     color: var(--color-secondary);
 }
 
+/* Imagem decorativa */
 .decoration img {
     position: relative;
 }
 
 /* ───────────────────────────────────────────────── */
-/*  12. RODAPÉ                                       */
+/*  13. RODAPÉ                                       */
 /* ───────────────────────────────────────────────── */
 
+/* Seção de rodapé do site */
 footer {
     display: flex;
     justify-content: center;
@@ -531,6 +574,7 @@ footer {
     color: var(--color-tertiary);
 }
 
+/* Container limitador do conteúdo do rodapé */
 .footer-container {
     display: flex;
     justify-content: space-around;
@@ -539,12 +583,14 @@ footer {
     gap: 1em;
 }
 
+/* Seção de créditos no rodapé */
 .footer-credits {
     display: flex;
     flex-direction: column;
     align-items: start;
 }
 
+/* Seção de descrição no rodapé */
 .footer-description {
     display: flex;
     align-items: center;
@@ -553,13 +599,14 @@ footer {
     text-align: center;
 }
 
+/* Título dentro do rodapé */
 .footer-title {
-    font-size: 1.3rem;
     font-size: var(--font-medium);
     font-weight: 500;
     line-height: 3rem;
 }
 
+/* Texto principal no rodapé */
 .footer-text {
     max-width: 500px;
     margin: 10px auto;
@@ -569,6 +616,7 @@ footer {
     text-align: center;
 }
 
+/* Texto de créditos no rodapé */
 .footer-credits-text {
     margin: 10px 0;
     line-height: 28px;
@@ -577,15 +625,18 @@ footer {
     text-decoration: none; 
 }
 
+/* Links dentro dos créditos do rodapé */
 .footer-credits-text a {
     color: var(--color-secondary);
     text-decoration: none; 
 }
 
+/* Estado hover para links nos créditos do rodapé */
 .footer-credits-text a:hover {
     text-decoration: underline; 
 }
 
+/* Seção de contato no rodapé */
 .footer-contact {
     display: flex;
     flex-direction: column;
@@ -593,6 +644,7 @@ footer {
     align-items: center;
 }
 
+/* Lista de links para redes sociais */
 .socials {
     list-style: none;
     display: flex;
@@ -601,26 +653,30 @@ footer {
     text-align: center;
 }
 
+/* Itens da lista de redes sociais */
 .socials li {
     margin: 0;
 }
 
+/* Links dentro dos itens de redes sociais */
 li a {
     text-decoration: none;
     color: #8bc7fb;
     padding: 10px;
 }
 
+/* Estado hover para links de redes sociais */
 li a:hover {
     color: #50a9f8; 
 }
 
 /* ───────────────────────────────────────────────── */
-/*  13. ESTILOS RESPONSIVOS                          */
+/*  14. ESTILOS RESPONSIVOS                          */
 /* ───────────────────────────────────────────────── */
 
 /* Tablets e dispositivos médios */
 @media screen and (max-width: 768px) {
+    /* Container principal responsivo */
     main {
         display: flex;
         justify-content: center;
@@ -629,16 +685,20 @@ li a:hover {
         padding: 20px 30px 30px 30px;
         min-height: calc(100vh - 80px); /* Ajusta para altura da tela menos o cabeçalho */
     }
+    
+    /* Título responsivo */
     .title {
         margin-left: 0;
     }
     
+    /* Ajuste do painel de interface em telas médias */
     .interface-panel {
         min-width: 0;
         z-index: 1;
         max-width: 365px;
     }
 
+    /* Ajuste do botão de participantes em telas médias */
     .participants-btn {
         width: 50%;
     }
@@ -648,6 +708,7 @@ li a:hover {
         display: none;
     }
 
+    /* Reorganiza o footer em coluna para telas médias */
     .footer-container {
         flex-direction: column;
         justify-content: center;
@@ -655,10 +716,12 @@ li a:hover {
         text-align: center;
     }
 
+    /* Centraliza créditos no footer em telas médias */
     .footer-credits {
         align-items: center;
     }
 
+    /* Altera ordem da descrição no footer em telas médias */
     .footer-description {
         order: -1;
     }
