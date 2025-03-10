@@ -6,7 +6,7 @@ let participants = []; // Lista oficial de participantes do sorteio
 let secretPairs = {};   // Objeto para armazenar os pares de amigo secreto 
 let currentPairIndex = 0; // Índice para controlar qual par está sendo exibido
 let entries = []; // Converte o objeto secretPairs em um array de pares [sorteador, amigo secreto]
-
+  
 // ─────────────────────────────────────────────────
 // 2. FUNÇÕES UTILITÁRIAS BÁSICAS
 // ─────────────────────────────────────────────────
@@ -36,8 +36,8 @@ function ellipsizeText(text, maxLength) {
         throw new Error("maxLength deve ser um número maior que zero.");
     }
     
-    // Verifica se a tela é igual ou menor que 400px
-    const isSmallScreen = window.innerWidth <= 400;
+    // Verifica se a tela é menor que 400px
+    const isSmallScreen = window.innerWidth < 400;
     
     // Diminui x caracteres no maxLength se for uma tela pequena
     const adjustedMaxLength = isSmallScreen ? maxLength - 2 : maxLength;
@@ -56,6 +56,52 @@ function shuffleArray(array) {
         // Troca os elementos nos índices 'i' e 'j'
         [array[i], array[j]] = [array[j], array[i]];
     }
+}
+
+// <-- Função para efeito de confetes -->
+function launchConfetti(element) {
+    // Verifica se o elemento existe
+    if (!element) {
+        console.error("Elemento não encontrado.");
+        return;
+    }
+    
+    // Obtém as dimensões e posição do elemento
+    const { left, top, width, height } = element.getBoundingClientRect();
+    
+    // Calcula as posições normalizadas (valores entre 0 e 1)
+    const leftX = left / window.innerWidth;         // Origem à esquerda
+    const rightX = (left + width) / window.innerWidth; // Origem à direita
+    const y = (top + height / 2) / window.innerHeight; // Meio do elemento na vertical
+    
+    // Verifica a largura da janela para ajustar os parâmetros
+    const isSmallScreen = window.innerWidth < 400;
+    
+    // Configurações comuns para ambos os lados
+    const confettiSettings = {
+        particleCount: 125,    // Quantidade de partículas
+        spread: isSmallScreen ? 20 : 30,  // Ajusta o spread com base no tamanho da tela
+        startVelocity: 60,     // Velocidade inicial
+        gravity: 1,            // Força da gravidade
+        decay: 0.9,            // Taxa de desaceleração
+        ticks: 350,            // Duração da animação
+        disableForReducedMotion: true,
+        colors: ['#3fa9f5', '#ff5862', '#cc1de8', '#2071f6', '#ebf5ff', '#ea46ff']
+    };
+    
+    // Lança confete do lado esquerdo 
+    confetti({
+        ...confettiSettings,
+        angle: isSmallScreen ? 80 : 75,  // Ajusta o ângulo com base no tamanho da tela
+        origin: { x: leftX, y }
+    });
+    
+    // Lança confete do lado direito 
+    confetti({
+        ...confettiSettings,
+        angle: isSmallScreen ? 100 : 105,  // Ajusta o ângulo com base no tamanho da tela
+        origin: { x: rightX, y }
+    });
 }
 
 // ─────────────────────────────────────────────────
@@ -560,6 +606,8 @@ function revealSecretFriend(button) {
         const [drawer, friend] = entries[currentPairIndex];
         displayDrawResult(drawer, friend);
         toggleHideButton(true);
+        const addButton = document.getElementById('drawButton');
+        launchConfetti(addButton);
         currentPairIndex++;
 
         if (currentPairIndex >= entries.length) {
