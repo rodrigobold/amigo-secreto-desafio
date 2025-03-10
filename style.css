@@ -324,16 +324,10 @@ label[for="inputField"]:not(.collapsed) {
 }
 
 /* Estilos para botões desabilitados */
-.edit-btn.disabled, 
-.delete-btn.disabled {
+.edit-btn:disabled, 
+.delete-btn:disabled {
     opacity: 0.5;
-}
-
-/* Efeito de hover para botões desabilitados (apenas visual) */
-.edit-btn.disabled:hover, 
-.delete-btn.disabled:hover {
-    opacity: 0.5;
-    color: #a9a7a7; /* Cor desejada para o estado desabilitado */
+    pointer-events: none; /* Impede qualquer interação */
 }
 
 /* Estado hover do botão de editar */
@@ -486,6 +480,7 @@ label[for="inputField"]:not(.collapsed) {
 /* Estado desabilitado do botão adicionar */
 .btn-add:disabled {
     background-color: #a9a7a7; 
+    pointer-events: none; 
 }
 
 /* Botão para revelar resultado do sorteio */
@@ -683,7 +678,7 @@ li a:hover {
         align-items: start;
         min-width: 100%;
         padding: 20px 30px 30px 30px;
-        min-height: calc(100vh - 80px); /* Ajusta para altura da tela menos o cabeçalho */
+                    min-height: calc(100vh - 80px); /* Ajusta para altura da tela menos o cabeçalho */
     }
     
     /* Título responsivo */
