@@ -232,10 +232,10 @@ function handleNameUpdate(nameSpan) {
     participants[index] = newName;
     
     // Prepara o nome para exibição na mensagem (com reticências se for muito longo)
-    const ellipsizedName = ellipsizeText(newName, 11);
+    const shortenedName = ellipsizeText(newName, 11);
     
     // Exibe mensagem de sucesso
-    showAlertMessage(`Nome atualizado para <span class="highlight-random">${ellipsizedName}</span>!`);
+    showAlertMessage(`Nome atualizado para <span class="highlight-random">${shortenedName}</span>!`);
     
     // Atualiza a lista visual de participantes
     updateFriendsList();
@@ -415,12 +415,12 @@ function insertFriend() {
         showAlertMessage("Por favor, insira um nome!");
     } else if (participants.map(p => p.toLowerCase()).includes(normalizedName.toLowerCase())) {
         // Se o nome já estiver na lista, exibe uma mensagem de alerta, aqui usamos maxLength = 13 
-        const ellipsizedName = ellipsizeText(normalizedName, 13);
+        const shortenedName = ellipsizeText(normalizedName, 13);
         
         // Mensagem diferente baseada no tamanho da tela
         const duplicateMessage = isSmallScreen
-            ? `<span class="highlight-random">${ellipsizedName}</span> já está na lista!`
-            : `<span class="highlight-random">${ellipsizedName}</span> já está na lista do sorteio!`;   
+            ? `<span class="highlight-random">${shortenedName}</span> já está na lista!`
+            : `<span class="highlight-random">${shortenedName}</span> já está na lista do sorteio!`;   
             
         showAlertMessage(duplicateMessage);
     } else {
@@ -428,12 +428,12 @@ function insertFriend() {
         participants.push(normalizedName); 
 
         // Aqui usamos maxLength = 11 
-        const ellipsizedName = ellipsizeText(normalizedName, 11);
+        const shortenedName = ellipsizeText(normalizedName, 11);
         
         // Mensagem diferente baseada no tamanho da tela
         const successMessage = isSmallScreen
-            ? `<span class="highlight-random">${ellipsizedName}</span> adicionado à lista!`
-            : `Você adicionou <span class="highlight-random">${ellipsizedName}</span> à lista do sorteio!`;
+            ? `<span class="highlight-random">${shortenedName}</span> adicionado à lista!`
+            : `Você adicionou <span class="highlight-random">${shortenedName}</span> à lista do sorteio!`;
             
         showAlertMessage(successMessage);
         
@@ -445,14 +445,17 @@ function insertFriend() {
 
 // <-- Função para deletar um participante da lista -->
 function deleteFriend(index) {
-    // Remove o participante do array 'participants' na posição indicada pelo índice
-    participants.splice(index, 1);
-    
-    // Atualiza a interface da lista de participantes após a remoção
+    // Remove o participante do array e pega o primeiro item do array retornado
+    const removedParticipant = participants.splice(index, 1)[0];
+
+    // Reduz o tamanho do nome se for muito grande usando a função ellipsizeText
+    const shortenedName = ellipsizeText(removedParticipant, 11);
+
+    // Atualiza a interface da lista de participantes
     updateFriendsList();
     
-    // Exibe uma mensagem informando que o participante foi removido
-    showAlertMessage("Participante removido da lista!");
+    // Exibe uma mensagem informando que o participante foi removido, com nome encurtado
+    showAlertMessage(`Você removeu <span class="highlight-removed">${shortenedName}</span> da lista!`);
 }
 
 // <-- Função para iniciar a edição inline do nome de um participante -->
@@ -624,7 +627,7 @@ function resetDraw(button) {
     secretPairs = {};
     currentPairIndex = 0;
     updateFriendsList();
-    displayTextOnScreen('#drawResult', 'Sorteio reiniciado! Adicione novos participantes.');
+    displayTextOnScreen('#drawResult', 'Sorteio concluído! 😎 adicione novos amigos para sortear novamente! 🎉');
 
     // Ativa botões de gerenciamento de participantes
     toggleButtonsState('enable', ['#addButton', '.edit-btn', '.delete-btn']);
