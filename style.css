@@ -1,5 +1,5 @@
 /*  Importação de fontes externas */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tomorrow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 /* ───────────────────────────────────────────────── */
 /*  1. RESET E CONFIGURAÇÕES INICIAIS                */
@@ -31,15 +31,17 @@ html, body {
 :root {
     /* Cores */
     --color-primary: #ffffff;
-    --color-secondary: #3fa9f5;
+    --color-secondary: #4f92eb; 
     --color-tertiary: #000000;
     --color-auxiliary: #cfddf8;
     --color-highlight: #12ca36;
 
     /* Tamanhos de Fontes */
-    --font-small: clamp(0.875rem, 0.75rem + 0.416vw, 1rem);
-    --font-medium: clamp(1rem, 0.7rem + 1vw, 1.3rem);
-    --font-large: clamp(1rem, 0.68rem + 1.37vw, 1.5rem);
+    --font-label: clamp(0.62rem, 0.49rem + 0.4333333333333333vw, 0.75rem); /* Texto pequeno, como labels e legendas */
+    --font-extra-small: clamp(0.7rem, 0.5999999999999999rem + 0.3333333333333336vw, 0.8rem); /* Texto secundário pequeno */
+    --font-body-small: clamp(0.8rem, 0.7000000000000001rem + 0.33333333333333326vw, 0.9rem); /* Texto pequeno do corpo */
+    --font-body: clamp(0.875rem, 0.75rem + 0.416vw, 1rem); /* Texto padrão do corpo */
+    --font-heading: clamp(1rem, 0.75rem + 0.8333333333333334vw, 1.25rem); /* Cabeçalhos médios/grandes */
 }
 
 /* Container principal que organiza todo o conteúdo em coluna */
@@ -58,7 +60,7 @@ header {
     position: relative;
     padding: 16px 20px; 
     z-index: 2;
-    background-color: var(--color-secondary);
+    background-color: #4f92eb;
 }
 
 /* Container que limita a largura do conteúdo do cabeçalho */
@@ -71,8 +73,9 @@ header {
 
 /* Título principal do site no cabeçalho */
 .title {
-    font-family: sans-serif;
-    font-size: var(--font-large);
+    font-family: "Tomorrow", sans-serif;
+    font-size: 1rem;
+    font-size: var(--font-heading);
     color: var(--color-primary);
     font-weight: 600;
     white-space: nowrap;
@@ -92,7 +95,7 @@ main {
     align-items: center;
     position: relative;
     margin: auto;   
-    padding: 50px 50px 100px 50px;
+    padding: 40px 50px 100px 50px;
     min-height: auto;
     min-width: 100%;
     gap: 50px;
@@ -116,9 +119,10 @@ main {
     display: inline-block;
     min-height: 4.5em;
     font-family: Poppins, sans-serif;
-    font-size: var(--font-medium);
+    font-size: 1rem;
+    font-size: var(--font-heading);
     color: var(--color-tertiary);
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.5;
     white-space: normal;
 }
@@ -148,7 +152,8 @@ main {
 /* Container para exibir mensagens de alerta ao usuário */
 .alert-message {
     font-family: Poppins, sans-serif;
-    font-size: var(--font-small);
+    font-size: 0.9rem;
+    font-size: var(--font-body-small);
     min-height: 3em;
     padding: 0.8em 0;
     line-height: 1.3em;
@@ -159,6 +164,10 @@ main {
     opacity: 0; /* Inicialmente invisível */
     visibility: hidden; /* Removido do fluxo do layout */
     transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Transição suave */
+}
+
+.highlight-removed {
+    color: red; /* Destaque azul para o sorteador atual */
 }
 
 /* ───────────────────────────────────────────────── */
@@ -178,12 +187,13 @@ main {
     left: 50%; /* Centraliza o botão */
     transform: translateX(-50%);
     z-index: 2;
-    width: 45%;
-    padding: 0 15px 0 20px;
+    width: 40%;
+    padding: 3px 5px 3px 5px;
     border: none;
-    border-radius: 0 0 15px 15px;
-    font-family: Poppins, sans-serif;
-    font-size: clamp(0.9rem, 0.733rem + 0.556vw, 1rem);
+    border-radius: 0 0 12px 12px;
+    font-family: "Open Sans", "Arial", "Droid Sans", sans-serif; 
+    font-size: 0.9rem;
+    font-size: var(--font-body);
     color: var(--color-primary);
     background: var(--color-secondary);
     cursor: pointer;
@@ -194,46 +204,31 @@ main {
 
 /* Painel que contém a lista de participantes */
 .participants {
-    position: relative; 
-    display: flex; 
-    justify-content: center; 
     width: 100%;
     min-height: 10rem; 
     color: var(--color-tertiary);
     overflow: hidden;   
-    border-radius: 24px; 
+    border-radius: 17px; 
     border: 2px solid var(--color-auxiliary);
-    box-shadow: rgba(207, 221, 248, 0.842) 0px 12px 48px -8px;
+    box-shadow: rgba(207, 221, 248, 0.842) 0px 4px 25px -8px;
     border-top-width: 0px;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5em;
     opacity: 1; /* Estado inicial visível */
     visibility: visible; /* Estado inicial visível */
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* Rótulo para a lista de participantes */
-.participants label {
-    position: absolute; 
-    top: 0; 
-    text-align: center; 
-    font-family: Poppins, sans-serif; 
-    color: var(--color-auxiliary); 
-    pointer-events: none; 
-    background-color: transparent; 
-    z-index: 1; 
-}
-
 /* Lista principal de participantes em formato grid */
 #participantsList {
     display: grid; 
-    grid-template-columns: repeat(2, minmax(0, 250px)); /* Grid de 2 colunas */
-    gap: 0.5rem; 
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Use frações em vez de pixels fixos */
+    gap: 0.5em; 
     width: 100%; 
-    max-height: 6rem;
+    max-height: 8em;
     overflow-y: auto; /* Rolagem vertical para listas grandes */
     scrollbar-gutter: stable;
     margin: 1.5rem 0 0 0; 
-    padding: 1rem 1rem 0 1rem; 
+    padding: 0.7rem 1rem 0 1rem; 
 }
 
 /* Item individual na lista de participantes */
@@ -244,7 +239,8 @@ main {
     width: 100%; 
     height: 35px; 
     padding: 0.5em; 
-    font-size: 0.9em;
+    font-size: 0.9rem;
+    font-size: var(--font-body-small);
     font-family: Poppins, sans-serif; 
     list-style-type: none;
     background-color: #a5a5a525;
@@ -287,6 +283,8 @@ label[for="inputField"]:not(.collapsed) {
     position: absolute;
     left: 0;
     color: var(--color-secondary);
+    font-size: 0.9rem;
+    font-size: var(--font-body-small);
     font-weight: 500;
     flex-shrink: 0;
     padding-right: 0.2em;
@@ -297,6 +295,8 @@ label[for="inputField"]:not(.collapsed) {
     align-items: center;
     position: relative;
     color: #333;
+    font-size: 0.9rem;
+    font-size: var(--font-body-small);
     max-width: calc(100% - 45px); /* Garante que o nome não ultrapasse o espaço dos botões */
     text-align: center;
     white-space: nowrap; 
@@ -342,7 +342,7 @@ label[for="inputField"]:not(.collapsed) {
 
 /* Ícones dentro dos botões de ação */
 .participant-actions i {
-    font-size: 0.7em;
+    font-size: 0.6rem;
 }
 
 /* Estilo para o nome do participante em modo de edição */
@@ -363,7 +363,9 @@ label[for="inputField"]:not(.collapsed) {
 
 /* Estado de foco no nome editável */
 .participant-name[contenteditable="true"]:focus {
-    background-color: rgb(226, 226, 226);
+    background-color: rgb(221, 221, 221);
+    border-radius: 5px;
+    min-width: 70%;
 }
 
 /* ───────────────────────────────────────────────── */
@@ -417,10 +419,11 @@ label[for="inputField"]:not(.collapsed) {
     height: 3.5em; 
     padding: 0 1rem; 
     font-family: Poppins, sans-serif; 
-    font-size: 1em; 
+    font-size: 1rem; 
+    font-size: var(--font-body);
     color: var(--color-tertiary); 
     border: 2px solid var(--color-auxiliary); 
-    border-radius: 20px; 
+    border-radius: 16px; 
     background: transparent; 
     outline: none; 
 }
@@ -433,6 +436,8 @@ label[for="inputField"]:not(.collapsed) {
     padding: 0 5px; 
     font-family: Poppins, sans-serif; 
     color: var(--color-auxiliary);
+    font-size: 1rem;
+    font-size: var(--font-body);
     border-radius: 20px;
     pointer-events: none; 
     transform: translateY(-50%); 
@@ -445,7 +450,8 @@ label[for="inputField"]:not(.collapsed) {
 .input-group input:focus ~ label, 
 .input-group input:valid ~ label {
     top: 0; 
-    font-size: 0.8rem; 
+    font-size: 0.8rem;
+    font-size: var(--font-label);
     font-weight: 500; 
     color: var(--color-secondary); 
     background-color: var(--color-primary);
@@ -463,9 +469,10 @@ label[for="inputField"]:not(.collapsed) {
     position: relative;
     background: var(--color-secondary);
     margin-bottom: 0.5rem;
+    font-family: "Open Sans", "Arial", "Droid Sans", sans-serif; 
     font-size: clamp(0.9rem, 0.7333333333333334rem + 0.5555555555555554vw, 1rem);
-    border-radius: 15px;
-    font-weight: 700;
+    border-radius: 12px;
+    font-weight: 600;
     text-align: center;
     cursor: pointer;
     transition: all 0.1s ease-in-out;
@@ -517,7 +524,8 @@ label[for="inputField"]:not(.collapsed) {
     font-family: Poppins, sans-serif;
     color: var(--color-primary);
     border-radius: 10px;
-    font-size: 0.8rem;
+    font-size: 0.8;
+    font-size: var(--font-extra-small);
     padding: 1px 10px;
     cursor: pointer;
     background: var(--color-secondary);
@@ -536,10 +544,6 @@ label[for="inputField"]:not(.collapsed) {
     position: relative;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    font-family: sans-serif;
-    font-size: 12px;
-    color: var(--color-secondary);
 }
 
 /* Imagem decorativa */
@@ -563,8 +567,7 @@ footer {
     right: 0;
     background-color: #f9f9f9;
     height: auto;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding: 30px 30px;
     width: 100vw;
     color: var(--color-tertiary);
 }
@@ -575,7 +578,6 @@ footer {
     justify-content: space-around;
     width: 100%;
     max-width: 1250px;
-    gap: 1em;
 }
 
 /* Seção de créditos no rodapé */
@@ -596,7 +598,7 @@ footer {
 
 /* Título dentro do rodapé */
 .footer-title {
-    font-size: var(--font-medium);
+    font-size: var(--font-body);
     font-weight: 500;
     line-height: 3rem;
 }
@@ -604,9 +606,10 @@ footer {
 /* Texto principal no rodapé */
 .footer-text {
     max-width: 500px;
-    margin: 10px auto;
+    margin: 10px 0;
     line-height: 28px;
-    font-size: 14px;
+    font-size: 0.875rem;
+    font-size: var(--font-body-small);
     color: #494b4e;
     text-align: center;
 }
@@ -615,7 +618,8 @@ footer {
 .footer-credits-text {
     margin: 10px 0;
     line-height: 28px;
-    font-size: 14px;
+    font-size: 0.875rem;
+    font-size: var(--font-body-small);
     color: #494b4e;
     text-decoration: none; 
 }
@@ -653,16 +657,16 @@ footer {
     margin: 0;
 }
 
-/* Links dentro dos itens de redes sociais */
+/* Links dentro dos itens de redes sociais 8bc7fb */
 li a {
     text-decoration: none;
     color: #8bc7fb;
     padding: 10px;
 }
 
-/* Estado hover para links de redes sociais */
+/* Estado hover para links de redes sociais #50a9f8 */
 li a:hover {
-    color: #50a9f8; 
+    color: var(--color-secondary); 
 }
 
 /* ───────────────────────────────────────────────── */
@@ -678,7 +682,7 @@ li a:hover {
         align-items: start;
         min-width: 100%;
         padding: 20px 30px 30px 30px;
-                    min-height: calc(100vh - 80px); /* Ajusta para altura da tela menos o cabeçalho */
+        min-height: calc(100vh - 80px); /* Ajusta para altura da tela menos o cabeçalho */
     }
     
     /* Título responsivo */
@@ -723,7 +727,7 @@ li a:hover {
 }
 
 /* Smartphones e dispositivos pequenos */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 375px) {
     /* Altera layout da lista para uma coluna em telas menores */
     #participantsList {
         display: grid;
