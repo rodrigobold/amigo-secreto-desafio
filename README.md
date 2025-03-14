@@ -45,7 +45,7 @@ Este projeto foi criado como parte do desafio de desenvolvimento do curso Oracle
 
 ### 1️⃣ Array para armazenar nomes 
 
-- ✅ Array `participants` declarada para armazenar a lista de amigos 
+- Array `participants` declarada para armazenar a lista de amigos 
     <details>
     <summary>Código</summary>
     <br>
@@ -59,16 +59,14 @@ Este projeto foi criado como parte do desafio de desenvolvimento do curso Oracle
 
 `insertFriend()`  
 
-- ✅ Captura o campo de entrada 
-- ✅ Valida campos vazios
-- ✅ Exibe alertas para erros  
-- ✅ Atualiza o array de amigos  
-- ✅ Limpa o campo após adição  
+- Captura o campo de entrada 
+- Valida campos vazios
+- Exibe alertas para erros  
+- Atualiza o array de amigos  
+- Limpa o campo após adição  
 
     <details>
     <summary>Código</summary>
-    <br>
-
     ```javascript
     function insertFriend() { 
         const inputName = document.getElementById('inputField'); 
@@ -91,15 +89,13 @@ Este projeto foi criado como parte do desafio de desenvolvimento do curso Oracle
 
 `updateFriendsList()`
 
-- ✅ Obtém o elemento da lista  
-- ✅Limpa a lista existente  
-- ✅ Percorre o array de amigos  
-- ✅ Adiciona elementos à lista HTML  
+- Obtém o elemento da lista  
+- Limpa a lista existente  
+- Percorre o array de amigos  
+- Adiciona elementos à lista HTML  
 
     <details>
     <summary>Código</summary>
-    <br>
-
     ```javascript
     function updateFriendsList() { 
         const list = document.getElementById('participantsList'); 
@@ -114,13 +110,12 @@ Este projeto foi criado como parte do desafio de desenvolvimento do curso Oracle
 ### 4️⃣ Funções para sortear os amigos 
 `generatePairs()`  
 
-- ✅ Valida a disponibilidade de amigos  
-- ✅ Gera índices aleatórios  
-- ✅ Obtém o nome sorteado  
+- Valida a disponibilidade de amigos  
+- Gera índices aleatórios  
+- Obtém o nome sorteado  
 
     <details>
     <summary>Código</summary>
-
     ```javascript
     function generatePairs(participants) { 
         if (participants.length < 2) { 
@@ -141,18 +136,14 @@ Este projeto foi criado como parte do desafio de desenvolvimento do curso Oracle
         return friendsPairs; 
     }
     ```
-
     </details>
-    <br>
 
 `revealSecretFriend()`  
 
-- ✅ Exibe o resultado do sorteio   
+- Exibe o resultado do sorteio   
 
     <details>
     <summary>Código</summary>
-    <br>
-
     ```javascript
     function revealSecretFriend(button) {
         if (currentPairIndex < entries.length) {
@@ -162,7 +153,6 @@ Este projeto foi criado como parte do desafio de desenvolvimento do curso Oracle
         }
     }
     ```
-
     </details>
 
 ## 🎮 Como Usar
