@@ -5,8 +5,8 @@
 
 - [Descrição](#-descrição)
 - [Funcionalidades do Projeto](#-funcionalidades-do-projeto)
-- [Objetivos do Desafio](#-objetivos-do-desafio)
 - [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Objetivos do Desafio](#-objetivos-do-desafio)
 - [Como Usar](#-como-usar)
 - [Responsividade](#-responsividade)
 - [Créditos](#-créditos)
@@ -45,127 +45,125 @@ Este projeto foi criado como parte do desafio de desenvolvimento do curso Oracle
 
 ### 1️⃣ Array para armazenar nomes 
 
-✅ Array `participants` declarada para armazenar a lista de amigos
-<details>
-<summary>Código</summary>
-<br>
+- ✅ Array `participants` declarada para armazenar a lista de amigos 
+    <details>
+    <summary>Código</summary>
+    <br>
 
-```javascript
-let participants = [];
-```
-</details>
+    ```javascript
+    let participants = [];
+    ```
+    </details>
 
 ### 2️⃣ Função para adicionar amigos 
 
 `insertFriend()`  
 
-✅ Captura o campo de entrada  
-✅ Valida campos vazios  
-✅ Exibe alertas para erros  
-✅ Atualiza o array de amigos  
-✅ Limpa o campo após adição  
+- ✅ Captura o campo de entrada 
+- ✅ Valida campos vazios
+- ✅ Exibe alertas para erros  
+- ✅ Atualiza o array de amigos  
+- ✅ Limpa o campo após adição  
 
-<details>
-<summary>Código</summary>
-<br>
+    <details>
+    <summary>Código</summary>
+    <br>
 
-```javascript
-function insertFriend() { 
-    const inputName = document.getElementById('inputField'); 
-    const normalizedName = inputName.value.trim(); 
-    if (normalizedName === '') { 
-        showAlertMessage("Por favor, insira um nome!"); 
-    } else if (participants.map(p => p.toLowerCase()).includes(normalizedName.toLowerCase())) { 
-        showAlertMessage(`${normalizedName} já está na lista!`); 
-    } else { 
-        participants.push(normalizedName); 
-        updateFriendsList(); 
-        inputName.value = ''; 
-    } 
-}
-```
-</details>
+    ```javascript
+    function insertFriend() { 
+        const inputName = document.getElementById('inputField'); 
+        const normalizedName = inputName.value.trim(); 
+        if (normalizedName === '') { 
+            showAlertMessage("Por favor, insira um nome!"); 
+        } else if (participants.map(p => p.toLowerCase()).includes(normalizedName.toLowerCase())) { 
+            showAlertMessage(`${normalizedName} já está na lista!`); 
+        } else { 
+            participants.push(normalizedName); 
+            updateFriendsList(); 
+            inputName.value = ''; 
+        } 
+    }
+    ```
+    </details>
 
 
 ### 3️⃣ Função para atualizar a lista de amigos 
 
 `updateFriendsList()`
 
-✅ Obtém o elemento da lista  
-✅ Limpa a lista existente  
-✅ Percorre o array de amigos  
-✅ Adiciona elementos à lista HTML  
+- ✅ Obtém o elemento da lista  
+- ✅Limpa a lista existente  
+- ✅ Percorre o array de amigos  
+- ✅ Adiciona elementos à lista HTML  
 
-<details>
-<summary>Código</summary>
-<br>
+    <details>
+    <summary>Código</summary>
+    <br>
 
-```javascript
-function updateFriendsList() { 
-    const list = document.getElementById('participantsList'); 
-    list.innerHTML = ''; 
-    participants.forEach((friend, index) => { 
-        list.prepend(createParticipantItem(friend, index)); 
-    }); 
-}
-```
-</details>
+    ```javascript
+    function updateFriendsList() { 
+        const list = document.getElementById('participantsList'); 
+        list.innerHTML = ''; 
+        participants.forEach((friend, index) => { 
+            list.prepend(createParticipantItem(friend, index)); 
+        }); 
+    }
+    ```
+    </details>
 
 ### 4️⃣ Funções para sortear os amigos 
 `generatePairs()`  
 
-✅ Valida a disponibilidade de amigos  
-✅ Gera índices aleatórios  
-✅ Obtém o nome sorteado  
+- ✅ Valida a disponibilidade de amigos  
+- ✅ Gera índices aleatórios  
+- ✅ Obtém o nome sorteado  
 
-<details>
-<summary>Código</summary>
-<br>
+    <details>
+    <summary>Código</summary>
 
-```javascript
-function generatePairs(participants) { 
-    if (participants.length < 2) { 
-        showAlertMessage("Por favor, adicione mais amigos!"); 
-        return; 
-    } 
-    let pickedFriends; 
-    let isValid = false; 
-    while (!isValid) { 
-        pickedFriends = [...participants]; 
-        shuffleArray(pickedFriends); 
-        isValid = pickedFriends.every((friend, index) => friend !== participants[index]); 
-    } 
-    const friendsPairs = {}; 
-    participants.forEach((participant, index) => { 
-        friendsPairs[participant] = pickedFriends[index]; 
-    }); 
-    return friendsPairs; 
-}
-```
+    ```javascript
+    function generatePairs(participants) { 
+        if (participants.length < 2) { 
+            showAlertMessage("Por favor, adicione mais amigos!"); 
+            return; 
+        } 
+        let pickedFriends; 
+        let isValid = false; 
+        while (!isValid) { 
+            pickedFriends = [...participants]; 
+            shuffleArray(pickedFriends); 
+            isValid = pickedFriends.every((friend, index) => friend !== participants[index]); 
+        } 
+        const friendsPairs = {}; 
+        participants.forEach((participant, index) => { 
+            friendsPairs[participant] = pickedFriends[index]; 
+        }); 
+        return friendsPairs; 
+    }
+    ```
 
-</details>
-<br>
+    </details>
+    <br>
 
 `revealSecretFriend()`  
 
-✅ Exibe o resultado do sorteio   
+- ✅ Exibe o resultado do sorteio   
 
-<details>
-<summary>Código</summary>
-<br>
+    <details>
+    <summary>Código</summary>
+    <br>
 
-```javascript
-function revealSecretFriend(button) {
-    if (currentPairIndex < entries.length) {
-        const [drawer, friend] = entries[currentPairIndex];
-        displayDrawResult(drawer, friend);
-        // O restante do código continua...
+    ```javascript
+    function revealSecretFriend(button) {
+        if (currentPairIndex < entries.length) {
+            const [drawer, friend] = entries[currentPairIndex];
+            displayDrawResult(drawer, friend);
+            // O restante do código continua...
+        }
     }
-}
-```
+    ```
 
-</details>
-<br>
+    </details>
 
 ## 🎮 Como Usar
 
