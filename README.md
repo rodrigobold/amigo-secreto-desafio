@@ -46,6 +46,7 @@ Este projeto foi criado como parte do desafio de desenvolvimento do curso Oracle
 ### 1️⃣ Array para armazenar nomes 
 
 - Array `participants` declarada para armazenar a lista de amigos 
+
     <details>
     <summary>Código</summary>
     <br>
@@ -63,7 +64,7 @@ Este projeto foi criado como parte do desafio de desenvolvimento do curso Oracle
 - Valida campos vazios
 - Exibe alertas para erros  
 - Atualiza o array de amigos  
-- Limpa o campo após adição  
+- Limpa o campo após adição   
 
     <details>
     <summary>Código</summary>
@@ -146,7 +147,7 @@ Este projeto foi criado como parte do desafio de desenvolvimento do curso Oracle
 
 `revealSecretFriend()`  
 
-- Exibe o resultado do sorteio   
+- Exibe o resultado do sorteio     
 
     <details>
     <summary>Código</summary>
@@ -199,4 +200,3 @@ O aplicativo foi projetado para funcionar em:
 - Desenvolvido por: [Rodrigo Bold](https://www.linkedin.com/in/rodrigo-bold/)
 
 <br>
-
