@@ -615,6 +615,7 @@ function revealSecretFriend(button) {
 
         if (currentPairIndex >= entries.length) {
             updateDrawButtonState(button, 'restart');
+            showAlertMessage("Parabéns! Seu sorteio foi concluído com sucesso!");
         } else {
             updateDrawButtonState(button, 'prepare');
         }
