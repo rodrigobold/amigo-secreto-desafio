@@ -84,6 +84,11 @@ header {
     margin-left: 1.3em;
 }
 
+.title i {
+    color: #ffffff;
+    margin-right: 3px;
+}
+
 /* ───────────────────────────────────────────────── */
 /*  4. CONTAINER PRINCIPAL                           */
 /* ───────────────────────────────────────────────── */
