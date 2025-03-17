@@ -665,13 +665,13 @@ footer {
 /* Links dentro dos itens de redes sociais 8bc7fb */
 li a {
     text-decoration: none;
-    color: #8bc7fb;
+    color: var(--color-secondary);
     padding: 10px;
 }
 
 /* Estado hover para links de redes sociais #50a9f8 */
 li a:hover {
-    color: var(--color-secondary); 
+    color: #8bc7fb; 
 }
 
 /* ───────────────────────────────────────────────── */
