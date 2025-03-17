@@ -439,7 +439,6 @@ function insertFriend() {
         
         inputName.value = ''; // Limpa o campo de entrada de nome
         updateFriendsList();
-        console.log(`participants: ${participants}`);
     }
 }
 
