@@ -491,7 +491,7 @@ function setupInlineEdit() {
 // <-- Função que gera pares para o sorteio do Amigo Secreto -->
 function generatePairs(participants) {
     // Verifica se há pelo menos 2 participantes. Se não, exibe um alerta.
-    if (participants.length < 2) {
+    if (participants.length < 3) {
         showAlertMessage("Por favor, adicione mais amigos!"); // Exibe um alerta pedindo mais amigos
         return; // Retorna null, pois o sorteio não pode ser feito
     }
