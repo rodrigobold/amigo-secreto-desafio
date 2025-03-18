@@ -646,12 +646,24 @@ function resetDraw(button) {
 // <-- Inicializa a funcionalidade de edição inline -->
 setupInlineEdit();
 
-// <-- Adiciona um evento ao campo de input para detectar quando o usuário pressionar Enter -->
-document.getElementById("inputField").addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-        document.getElementById("addButton").click();
-    }
-});
+// <-- Adiciona um evento quando o usuário pressionar Enter (compatível com IE e navegadores modernos) -->
+const inputField = document.getElementById("inputField");
+const addButton = document.getElementById("addButton");
+
+if (inputField.addEventListener) {
+    inputField.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            addButton.click();
+        }
+    });
+} else if (inputField.attachEvent) {
+    inputField.attachEvent("onkeydown", function (event) {
+        event = event || window.event; // Garantir compatibilidade com o IE
+        if (event.key === "Enter" || event.keyCode === 13) { // Verificar keyCode para IE
+            addButton.click();
+        }
+    });
+}
 
 // <-- Adiciona um evento que escuta quando a tela é redimensionada -->
 window.addEventListener("resize", updateParticipantsButtonText);
