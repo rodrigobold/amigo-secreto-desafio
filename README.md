@@ -37,8 +37,8 @@ Este projeto foi criado como parte do desafio de desenvolvimento do curso Oracle
 
 
 ## 📚 Bibliotecas utilizadas
-- [Font Awesome](https://fontawesome.com/) (via CDN) – Para animações de confetes
-- [Canvas-confetti](https://cdn.jsdelivr.net/npm/canvas-confetti) (via CDN) – Para ícones 
+- [Font Awesome](https://fontawesome.com/) (via CDN) – Para ícones
+- [Canvas-confetti](https://cdn.jsdelivr.net/npm/canvas-confetti) (via CDN) – Para animações de confetes
 
 
 ## 🎯 Objetivos do Desafio
@@ -125,7 +125,7 @@ Este projeto foi criado como parte do desafio de desenvolvimento do curso Oracle
 
     ```javascript
     function generatePairs(participants) { 
-        if (participants.length < 2) { 
+        if (participants.length < 3) { 
             showAlertMessage("Por favor, adicione mais amigos!"); 
             return; 
         } 
